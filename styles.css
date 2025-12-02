@@ -5,6 +5,12 @@
     box-sizing: border-box;
 }
 
+html, body {
+    height: 100%;
+    margin: 5px;
+    padding: 5px;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     line-height: 1.6;
@@ -13,7 +19,7 @@ body {
 }
 
 .container {
-    min-height: 100vh;
+    height: calc(100vh - 20px);
 }
 
 /* Left Column Styles */
@@ -23,6 +29,9 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    height: 100%;
+    min-height: 100%;
+    box-sizing: border-box;
 }
 
 .main-header {
@@ -115,8 +124,15 @@ body {
 
 /* Responsive Design */
 @media (max-width: 1024px) {
+    .container {
+        height: auto;
+        min-height: calc(100vh - 20px);
+    }
+
     .left-column {
         padding: 40px 50px;
+        height: auto;
+        min-height: 100%;
     }
 
     .content-section {
@@ -126,8 +142,25 @@ body {
 }
 
 @media (max-width: 768px) {
+    html, body {
+        height: auto;
+        min-height: 100%;
+    }
+
+    .container {
+        height: auto;
+        min-height: 100vh;
+    }
+
     .left-column {
         padding: 30px 30px;
+        height: auto;
+        min-height: 100vh;
+        justify-content: flex-start;
+    }
+
+    .main-header {
+        margin-bottom: 50px;
     }
 
     .main-headline {
@@ -140,6 +173,11 @@ body {
 }
 
 @media (max-width: 480px) {
+    .left-column {
+        padding: 20px 20px;
+        min-height: 100vh;
+    }
+
     .main-headline {
         font-size: 28px;
     }
