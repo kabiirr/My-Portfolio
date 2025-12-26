@@ -10,9 +10,10 @@
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     height: 100%;
-    
+
 }
 
 body {
@@ -31,7 +32,7 @@ body {
 }
 
 .frame {
-    background-color: #F2EFE9;
+    background-color: #FFFFFF;
     min-height: calc(100vh - 40px);
     display: flex;
     flex-direction: column;
@@ -93,7 +94,7 @@ body {
 .main-headline {
     font-size: 64px;
     font-weight: 500;
-    color: #364BA8;
+    color: #000000;
     line-height: 100%;
     letter-spacing: -3px;
 }
@@ -120,13 +121,13 @@ body {
 .live-column {
     display: flex;
     flex-direction: column;
-    gap: 22px;
+    gap: 6px;
 }
 
 .live-title {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 4px;
 }
 
 .pill {
@@ -147,47 +148,39 @@ body {
 }
 
 .title-line {
-    height: 2px;
-    background-color: #364BA8;
+    height: 0;
+    border-top: 1px dashed #364BA8;
+    background-color: transparent;
     flex: 1;
 }
 
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 28px 32px;
+    gap: 6px;
 }
 
 .project-card {
     position: relative;
-    padding: 18px 14px;
+    background-color: rgba(230, 230, 230, 0.5);
+    height: 56px;
+    padding: 0 24px;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 400;
     color: #364BA8;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.project-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-        linear-gradient(#364BA8, #364BA8) 0 0/12px 2px no-repeat,
-        linear-gradient(#364BA8, #364BA8) 0 0/2px 12px no-repeat,
-        linear-gradient(#364BA8, #364BA8) 100% 0/12px 2px no-repeat,
-        linear-gradient(#364BA8, #364BA8) 100% 0/2px 12px no-repeat,
-        linear-gradient(#364BA8, #364BA8) 0 100%/12px 2px no-repeat,
-        linear-gradient(#364BA8, #364BA8) 0 100%/2px 12px no-repeat,
-        linear-gradient(#364BA8, #364BA8) 100% 100%/12px 2px no-repeat,
-        linear-gradient(#364BA8, #364BA8) 100% 100%/2px 12px no-repeat;
-    pointer-events: none;
+    text-transform: uppercase;
+    font-family: 'Geist Mono', monospace;
+    cursor: pointer;
+    transition: text-decoration 0.2s ease;
 }
 
 .project-card:hover {
-    color: #1d2f7d;
+    text-decoration: underline;
+    text-underline-offset: 4px;
 }
 
 /* Right Column Styles — left untouched per placeholder requirement */
@@ -269,6 +262,7 @@ body {
     0% {
         transform: translateX(0);
     }
+
     100% {
         transform: translateX(-50%);
     }
@@ -320,7 +314,7 @@ body {
     .left-stack {
         display: flex;
         flex-direction: column;
-        gap:28px;
+        gap: 28px;
         align-self: stretch;
         min-width: 0;
         overflow: hidden;
@@ -334,6 +328,7 @@ body {
         align-items: stretch !important;
         gap: 0px;
     }
+
     .work-meta .pill {
         width: 100%;
         text-align: left;
@@ -363,7 +358,7 @@ body {
         letter-spacing: -2px;
     }
 
-    
+
 
     .projects-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -385,3 +380,13 @@ body {
     }
 }
 
+@media (max-width: 394px) {
+    .main-headline {
+        font-size: 28px;
+        text-wrap: balance;
+    }
+
+    .main-headline br {
+        display: none;
+    }
+}
