@@ -48,11 +48,11 @@ function changeImage() {
 
     // Move to next image index
     currentImageIndex = (currentImageIndex + 1) % projectImages.length;
-    
+
     // Clear any existing event handlers
     nextInactive.onload = null;
     nextInactive.onerror = null;
-    
+
     // Set the next image source
     const newImageSrc = projectImages[currentImageIndex];
     nextInactive.src = newImageSrc;
@@ -84,11 +84,11 @@ function changeImage() {
 function performSwitch(currentActive, nextInactive) {
     // Prevent multiple switches
     if (!isTransitioning) return;
-    
+
     // Instant switch - no transition
     currentActive.classList.remove('active');
     nextInactive.classList.add('active');
-    
+
     // Reset transition flag after a brief moment to ensure switch completes
     setTimeout(() => {
         isTransitioning = false;
@@ -100,19 +100,19 @@ function performSwitch(currentActive, nextInactive) {
  */
 function initCarousel() {
     if (!carouselImage1 || !carouselImage2) return;
-    
+
     // Preload all images first
     preloadImages();
-    
+
     // Set initial image
     carouselImage1.src = projectImages[0];
     carouselImage1.alt = 'Project Image 1';
     carouselImage1.classList.add('active');
-    
+
     // Preload next image
     carouselImage2.src = projectImages[1];
     carouselImage2.alt = 'Project Image 2';
-    
+
     // Wait for initial image to load, then start carousel
     if (carouselImage1.complete) {
         startCarousel();
@@ -127,7 +127,7 @@ function initCarousel() {
 function startCarousel() {
     // Preload next image
     preloadNextImage();
-    
+
     // Start the carousel rotation
     carouselInterval = setInterval(changeImage, imageChangeDelay);
 }
