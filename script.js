@@ -1,11 +1,11 @@
 // Project images array - replace with your actual image paths
 const projectImages = [
-    'https://res.cloudinary.com/dwbdylcas/image/upload/v1764703354/Frame_2087330658_vjlont.png',
-    'https://res.cloudinary.com/dwbdylcas/image/upload/v1764703519/Frame_2087330480_qwiqzw.png',
-    'https://res.cloudinary.com/dwbdylcas/image/upload/v1764703515/Frame_2087330479_gehpzx.png',
-    'https://res.cloudinary.com/dwbdylcas/image/upload/v1764703662/Frame_2087330477_mkrkx3.png',
-    'https://res.cloudinary.com/dwbdylcas/image/upload/v1764703657/Frame_2087330471_n04dg2.png',
-    'https://res.cloudinary.com/dwbdylcas/image/upload/v1764703654/Frame_2087330476_pnsze2.png'
+    'https://res.cloudinary.com/dwbdylcas/image/upload/v1766924583/Frame_2087330674_soowrn.png',
+    'https://res.cloudinary.com/dwbdylcas/image/upload/v1766924583/Frame_2087330673_ozujrb.png',
+    'https://res.cloudinary.com/dwbdylcas/image/upload/v1766924584/Frame_2087330676_kpl4nc.png',
+    'https://res.cloudinary.com/dwbdylcas/image/upload/v1766924583/Frame_2087330669_ezp3xv.png',
+    'https://res.cloudinary.com/dwbdylcas/image/upload/v1766924583/Frame_1000005192_eho55e.png',
+    'https://res.cloudinary.com/dwbdylcas/image/upload/v1766924583/Frame_2087330675_rg4sun.png'
 ];
 
 let currentImageIndex = 0;
