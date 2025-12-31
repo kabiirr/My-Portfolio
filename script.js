@@ -132,10 +132,60 @@ function startCarousel() {
     carouselInterval = setInterval(changeImage, imageChangeDelay);
 }
 
-// Initialize carousel when DOM is loaded
+// Initialize everything when DOM is loaded
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initCarousel);
+    document.addEventListener('DOMContentLoaded', () => {
+        initCarousel();
+        initHoverReveal();
+    });
 } else {
     initCarousel();
+    initHoverReveal();
 }
 
+/**
+ * Initialize Hover Reveal for Social Links
+ */
+function initHoverReveal() {
+    const links = document.querySelectorAll('.nav-link[data-hover-src]');
+    const img = document.querySelector('.hover-reveal-img');
+
+    if (links.length === 0 || !img) return;
+
+    // Center the image on the cursor using percent transforms
+    gsap.set(img, { xPercent: -50, yPercent: -50 });
+
+    // QuickSetter for performance
+    const setX = gsap.quickSetter(img, "x", "px");
+    const setY = gsap.quickSetter(img, "y", "px");
+
+    // Track mouse movement constantly
+    document.addEventListener('mousemove', (e) => {
+        setX(e.clientX);
+        setY(e.clientY);
+    });
+
+    links.forEach(link => {
+        link.addEventListener('mouseenter', () => {
+            const imgSrc = link.getAttribute('data-hover-src');
+            if (imgSrc) {
+                img.src = imgSrc;
+                gsap.to(img, {
+                    autoAlpha: 1,
+                    scale: 1,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            }
+        });
+
+        link.addEventListener('mouseleave', () => {
+            gsap.to(img, {
+                autoAlpha: 0,
+                scale: 0.8,
+                duration: 0.3,
+                ease: "power2.out"
+            });
+        });
+    });
+}

@@ -34,6 +34,20 @@ body {
     margin: 0;
 }
 
+.hover-reveal-img {
+    position: fixed;
+    width: 200px;
+    height: auto;
+    border-radius: 8px;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
 .container {
     min-height: 100vh;
     padding: 20px;
@@ -67,10 +81,10 @@ body {
 
 .nav-link {
     font-size: 14px;
-    color: #364BA8;
+    color: #000000;
     text-decoration: none;
     font-weight: 400;
-    font-family: 'Geist Mono', monospace;
+    font-family: 'Inter';
 }
 
 .nav-link:hover {
@@ -95,7 +109,7 @@ body {
 
 .sub-headline {
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: 1.5px;
     color: #0066FF;
     text-transform: uppercase;
@@ -137,7 +151,11 @@ body {
 .live-title {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 6px;
+}
+
+.live-title .pill {
+    color: #0076FF;
 }
 
 .live-text {
@@ -145,23 +163,23 @@ body {
     font-weight: 600;
     color: #364BA8;
     text-transform: uppercase;
-    font-family: 'Geist Mono', monospace;
-    letter-spacing: 0.4px;
+    font-family: 'Inter', monospace;
+    letter-spacing: 1.5px;
 }
 
 .beacon-container {
     position: relative;
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 2px;
+    margin-left: 4px;
 }
 
 .beacon-core {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     background-color: #0066FF;
     border-radius: 50%;
     z-index: 2;
@@ -171,7 +189,7 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
-    border: 2px solid #0066FF;
+    border: 2px solid #0076FF;
     border-radius: 50%;
     opacity: 0;
     animation: beacon-pulse 2s infinite ease-out;
@@ -225,15 +243,16 @@ body {
     height: 56px;
     padding: 0 24px;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 400;
-    color: #364BA8;
+    color: #000000;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
     text-transform: uppercase;
-    font-family: 'Geist Mono', monospace;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 1.5px;
     cursor: pointer;
 }
 
@@ -255,6 +274,10 @@ body {
     pointer-events: none;
 }
 
+.project-card:hover {
+    color: #0076FF;
+}
+
 .project-card:hover::after {
     opacity: 1;
 }
@@ -262,11 +285,39 @@ body {
 /* Right Column Styles — left untouched per placeholder requirement */
 .right-column {
     display: flex;
+    flex-direction: column;
     align-items: flex-start;
     justify-content: center;
     box-sizing: border-box;
     position: relative;
     align-self: start;
+    width: 100%;
+}
+
+.carousel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.carousel-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: #000000;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.carousel-link {
+    font-size: 12px;
+    font-weight: 500;
+    color: #0076FF;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    cursor: pointer;
 }
 
 .image-carousel {
@@ -321,7 +372,7 @@ body {
 }
 
 .work-bar {
-    background-color: #364BA8;
+    background-color: #0076FF;
     color: #fff;
     padding: 16px 16px;
     border-radius: var(--work-bar-border-radius);
