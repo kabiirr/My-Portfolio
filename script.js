@@ -168,7 +168,8 @@ function initThemes() {
                 "--accent-color": "#0076FF",
                 "--card-bg": "rgba(230, 230, 230, 0.5)",
                 "--border-color": "#E6E6E6",
-                "--cursor-color": "#000000"
+                "--cursor-color": "#000000",
+                "--on-accent-color": "#FFFFFF"
             }
         },
         {
@@ -181,7 +182,8 @@ function initThemes() {
                 "--accent-color": "#3B82F6", /* Bright blue for dark bg */
                 "--card-bg": "rgba(40, 40, 40, 0.5)",
                 "--border-color": "#333333",
-                "--cursor-color": "#FFFFFF"
+                "--cursor-color": "#FFFFFF",
+                "--on-accent-color": "#FFFFFF"
             }
         },
         {
@@ -194,7 +196,8 @@ function initThemes() {
                 "--accent-color": "#EF233C",
                 "--card-bg": "rgba(220, 220, 225, 0.5)",
                 "--border-color": "#E5E5E5",
-                "--cursor-color": "#D90429"
+                "--cursor-color": "#D90429",
+                "--on-accent-color": "#FFFFFF"
             }
         },
         {
@@ -207,7 +210,8 @@ function initThemes() {
                 "--accent-color": "#2D6A4F",
                 "--card-bg": "rgba(200, 230, 210, 0.4)",
                 "--border-color": "#D8F3DC",
-                "--cursor-color": "#1B4332"
+                "--cursor-color": "#1B4332",
+                "--on-accent-color": "#FFFFFF"
             }
         },
         {
@@ -220,7 +224,8 @@ function initThemes() {
                 "--accent-color": "#7B2CBF",
                 "--card-bg": "rgba(240, 230, 255, 0.5)",
                 "--border-color": "#E0AAFF",
-                "--cursor-color": "#240046"
+                "--cursor-color": "#240046",
+                "--on-accent-color": "#FFFFFF"
             }
         },
         {
@@ -233,7 +238,8 @@ function initThemes() {
                 "--accent-color": "#475569",
                 "--card-bg": "rgba(203, 213, 225, 0.4)",
                 "--border-color": "#CBD5E1",
-                "--cursor-color": "#1E293B"
+                "--cursor-color": "#1E293B",
+                "--on-accent-color": "#FFFFFF"
             }
         },
         {
@@ -246,7 +252,8 @@ function initThemes() {
                 "--accent-color": "#D44D3D",
                 "--card-bg": "rgba(255, 230, 220, 0.5)",
                 "--border-color": "#FFD6CC",
-                "--cursor-color": "#4A1C17"
+                "--cursor-color": "#4A1C17",
+                "--on-accent-color": "#FFFFFF"
             }
         },
         {
@@ -256,10 +263,11 @@ function initThemes() {
                 "--frame-bg": "#15161E", /* Dark surface */
                 "--text-main": "#E0E0E0",
                 "--text-secondary": "#94A3B8",
-                "--accent-color": "#00FFC2", /* Electric Teal */
+                "--accent-color": "#4F46E5", /* Indigo */
                 "--card-bg": "rgba(30, 35, 50, 0.6)",
                 "--border-color": "#2A3345",
-                "--cursor-color": "#00FFC2"
+                "--cursor-color": "#4F46E5",
+                "--on-accent-color": "#FFFFFF"
             }
         },
         {
@@ -272,7 +280,8 @@ function initThemes() {
                 "--accent-color": "#8D6E63", /* Light Brown */
                 "--card-bg": "rgba(200, 180, 160, 0.3)",
                 "--border-color": "#D7CCC8",
-                "--cursor-color": "#3E2723"
+                "--cursor-color": "#3E2723",
+                "--on-accent-color": "#FFFFFF"
             }
         },
         {
@@ -285,21 +294,39 @@ function initThemes() {
                 "--accent-color": "#0284C7", /* Ocean Blue */
                 "--card-bg": "rgba(200, 240, 255, 0.5)",
                 "--border-color": "#BAE6FD",
-                "--cursor-color": "#0C4A6E"
+                "--cursor-color": "#0C4A6E",
+                "--on-accent-color": "#FFFFFF"
             }
         }
     ];
 
     // Pick a random theme
-    const randomTheme = themes[Math.floor(Math.random() * themes.length)];
-
-    // Apply CSS variables
-    const root = document.documentElement;
-    for (const [property, value] of Object.entries(randomTheme.colors)) {
-        root.style.setProperty(property, value);
+    function setRandomTheme() {
+        const randomTheme = themes[Math.floor(Math.random() * themes.length)];
+        const root = document.documentElement;
+        for (const [property, value] of Object.entries(randomTheme.colors)) {
+            root.style.setProperty(property, value);
+        }
+        console.log(`Applied Theme: ${randomTheme.name}`);
     }
 
-    console.log(`Applied Theme: ${randomTheme.name}`);
+    // Initialize
+    setRandomTheme();
+
+    // Event Listener for Double Click (Empty Space)
+    document.addEventListener('dblclick', (e) => {
+        // Check if we clicked on an interactive element
+        const interactive = e.target.closest('a, button, input, textarea, .project-card, .nav-link');
+
+        if (!interactive) {
+            const selection = window.getSelection().toString();
+            // Allow checking if selection is just whitespace
+            if (!selection.trim()) {
+                setRandomTheme();
+                window.getSelection().removeAllRanges();
+            }
+        }
+    });
 }
 
 /**
@@ -416,7 +443,7 @@ function animateTextReveal() {
 
 
 /**
- * Initialize Custom Cursor
+ * Initialize Custom Cursor with Grid Trail
  */
 function initCustomCursor() {
     const cursor = document.querySelector('.custom-cursor');
@@ -427,12 +454,59 @@ function initCustomCursor() {
     const setX = gsap.quickSetter(cursor, "x", "px");
     const setY = gsap.quickSetter(cursor, "y", "px");
 
+    // Track previous grid position
+    let lastGridX = -100;
+    let lastGridY = -100;
+    const snap = 20;
+
     document.addEventListener('mousemove', (e) => {
         setX(e.clientX);
         setY(e.clientY);
+
+        // Check if cursor is visible (opacity is approximately 1)
+        // We use getComputedStyle or check opacity directly if set by GSAP
+        // Getting style from GSAP cache is faster: gsap.getProperty(cursor, "opacity")
+        const opacity = gsap.getProperty(cursor, "opacity");
+        if (opacity < 0.5) return; // Don't draw trail if cursor is hidden
+
+        // Grid Trail Logic
+        // Calculate current grid position (top-left of the cell)
+        const gridX = Math.round(e.clientX / snap) * snap;
+        const gridY = Math.round(e.clientY / snap) * snap;
+
+        // If we moved to a new cell
+        if (gridX !== lastGridX || gridY !== lastGridY) {
+            // Create a pixel at the NEW position (marking the path)
+            const pixel = document.createElement('div');
+            pixel.className = 'trail-pixel';
+
+            // Adjust to center the 20x20 pixel on the grid point 
+            // The main cursor is centered (-50%, -50%). 
+            // If we want pixels to align with a grid, we should place them at top-left gridX, gridY 
+            // but since cursor is free-floating, let's span the pixel at the snapped coordinates.
+            // Since gridX is rounded, it snaps to nearest 20.
+            // Let's position it simply.
+            pixel.style.left = `${gridX}px`;
+            pixel.style.top = `${gridY}px`;
+            // Center it to align with the visual snap feel.
+            pixel.style.transform = 'translate(-50%, -50%)';
+
+            document.body.appendChild(pixel);
+
+            // Animate it: Wait, then flicker/fade
+            gsap.to(pixel, {
+                opacity: 0,
+                duration: 0.5,
+                delay: 0.1, // Short persistence
+                ease: "power2.out",
+                onComplete: () => pixel.remove()
+            });
+
+            lastGridX = gridX;
+            lastGridY = gridY;
+        }
     });
 }
-
 /**
  * Initialize Hover Reveal for Projects
  */
@@ -473,6 +547,7 @@ function initProjectHover() {
             if (logo) revealLogo.textContent = logo;
             if (imageSrc && revealImage) revealImage.src = imageSrc;
 
+            // Hide custom cursor
             if (cursor) gsap.to(cursor, { autoAlpha: 0, duration: 0.2, overwrite: true });
 
             // Liquid Effect: Animate displacement scale from high to 0
@@ -493,6 +568,7 @@ function initProjectHover() {
         });
 
         link.addEventListener('mouseleave', () => {
+            // Show custom cursor
             if (cursor) gsap.to(cursor, { autoAlpha: 1, duration: 0.2, overwrite: true });
 
             // Optional: Animate distortion out
@@ -544,7 +620,9 @@ function initHoverReveal() {
             const imgSrc = link.getAttribute('data-hover-src');
             if (imgSrc) {
                 img.src = imgSrc;
+                // Hide custom cursor
                 if (cursor) gsap.to(cursor, { autoAlpha: 0, duration: 0.2, overwrite: true });
+
                 gsap.to(img, {
                     autoAlpha: 1,
                     scale: 1,
@@ -556,7 +634,9 @@ function initHoverReveal() {
         });
 
         link.addEventListener('mouseleave', () => {
+            // Show custom cursor
             if (cursor) gsap.to(cursor, { autoAlpha: 1, duration: 0.2, overwrite: true });
+
             gsap.to(img, {
                 autoAlpha: 0,
                 scale: 0.8,

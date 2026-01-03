@@ -12,6 +12,7 @@
     --card-bg: rgba(230, 230, 230, 0.5);
     --border-color: #F2EFE9;
     --cursor-color: #000000;
+    --on-accent-color: #FFFFFF;
 }
 
 .text-link {
@@ -60,6 +61,17 @@ body {
     pointer-events: none;
     z-index: 9999;
     transform: translate(-50%, -50%);
+}
+
+.trail-pixel {
+    position: fixed;
+    width: 20px;
+    /* Snapped grid size */
+    height: 20px;
+    background-color: var(--cursor-color);
+    pointer-events: none;
+    z-index: 9998;
+    /* Behind main cursor */
 }
 
 .hover-reveal-img {
@@ -521,7 +533,7 @@ body.is-loading .frame>*:not(#preloader) {
 
 .work-bar {
     background-color: var(--accent-color);
-    color: #fff;
+    color: var(--on-accent-color);
     padding: 16px 16px;
     border-radius: var(--work-bar-border-radius);
     border: 1px solid var(--border-color);
