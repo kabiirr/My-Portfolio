@@ -2,6 +2,16 @@
 :root {
     --pill-border-radius: 0px;
     --work-bar-border-radius: 0px;
+
+    /* Default Theme (Classic Blue/White) */
+    --body-bg: #364BA8;
+    --frame-bg: #FFFFFF;
+    --text-main: #000000;
+    --text-secondary: #666666;
+    --accent-color: #0076FF;
+    --card-bg: rgba(230, 230, 230, 0.5);
+    --border-color: #F2EFE9;
+    --cursor-color: #000000;
 }
 
 .text-link {
@@ -28,10 +38,28 @@ body {
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     line-height: 1.6;
-    color: #1a1a2e;
-    background-color: #364BA8;
+    color: var(--text-main);
+    background-color: var(--body-bg);
     overflow-x: hidden;
     margin: 0;
+    cursor: none !important;
+}
+
+/* Force hide cursor on everything */
+* {
+    cursor: none !important;
+}
+
+.custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background-color: var(--cursor-color);
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
 }
 
 .hover-reveal-img {
@@ -51,17 +79,67 @@ body {
 .container {
     min-height: 100vh;
     padding: 20px;
-    background-color: #0076FF;
+    background-color: var(--body-bg);
 }
 
 .frame {
-    background-color: #FFFFFF;
+    background-color: var(--frame-bg);
     min-height: calc(100vh - 40px);
     display: flex;
     flex-direction: column;
     gap: 0;
     padding: 32px 32px 0;
     justify-content: space-between;
+    position: relative;
+    /* Added for preloader positioning */
+}
+
+/* ... existing styles ... */
+
+@media (max-width: 394px) {
+    .main-headline {
+        font-size: 28px;
+        text-wrap: balance;
+    }
+
+    .main-headline br {
+        display: none;
+    }
+}
+
+/* Hide content while loading, but keep white background frame and preloader visible */
+body.is-loading .frame>*:not(#preloader) {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Preloader Styles */
+#preloader {
+    position: absolute;
+    /* Changed from fixed to absolute */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9995;
+    /* Below custom cursor (9999) but above content */
+    display: flex;
+    flex-wrap: wrap;
+    background-color: transparent;
+    /* Container is transparent, pixels fill it */
+    pointer-events: none;
+    /* Let clicks pass through after animation, though strict removal is better */
+    overflow: hidden;
+    /* Ensure pixels don't spill out */
+}
+
+.pixel {
+    background-color: var(--body-bg);
+    /* Changed from black to match container background */
+    width: 5vw;
+    /* This will be recalculated in JS anyway, but good default */
+    height: 5vw;
+    position: relative;
 }
 
 .top-bar {
@@ -81,20 +159,20 @@ body {
 
 .nav-link {
     font-size: 14px;
-    color: #000000;
+    color: var(--text-main);
     text-decoration: none;
     font-weight: 400;
     font-family: 'Inter';
 }
 
 .nav-link:hover {
-    color: #1d2f7d;
+    color: var(--accent-color);
     text-decoration: underline;
 }
 
 .cta {
     padding: 10px 18px;
-    background-color: #364BA8;
+    background-color: var(--body-bg);
     color: #fff;
     border-radius: 5px;
     font-size: 13px;
@@ -111,14 +189,14 @@ body {
     font-size: 12px;
     font-weight: 500;
     letter-spacing: 1.5px;
-    color: #0066FF;
+    color: var(--accent-color);
     text-transform: uppercase;
 }
 
 .main-headline {
     font-size: 64px;
     font-weight: 500;
-    color: #000000;
+    color: var(--text-main);
     line-height: 100%;
     letter-spacing: -3px;
 }
@@ -155,13 +233,13 @@ body {
 }
 
 .live-title .pill {
-    color: #0076FF;
+    color: var(--accent-color);
 }
 
 .live-text {
     font-size: 16px;
     font-weight: 600;
-    color: #364BA8;
+    color: var(--body-bg);
     text-transform: uppercase;
     font-family: 'Inter', monospace;
     letter-spacing: 1.5px;
@@ -180,7 +258,7 @@ body {
 .beacon-core {
     width: 8px;
     height: 8px;
-    background-color: #0066FF;
+    background-color: var(--accent-color);
     border-radius: 50%;
     z-index: 2;
 }
@@ -189,7 +267,7 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
-    border: 2px solid #0076FF;
+    border: 2px solid var(--accent-color);
     border-radius: 50%;
     opacity: 0;
     animation: beacon-pulse 2s infinite ease-out;
@@ -211,8 +289,8 @@ body {
     display: inline-block;
     padding: 8px 0px;
     border-radius: var(--pill-border-radius);
-    background-color: #FFFFFF;
-    color: #000000;
+    background-color: var(--frame-bg);
+    color: var(--text-main);
     font-size: 12px;
     font-weight: 500;
     text-transform: uppercase;
@@ -226,11 +304,12 @@ body {
 
 .title-line {
     height: 0;
-    border-top: 1px dashed #364BA8;
+    border-top: 1px dashed var(--body-bg);
     background-color: transparent;
     flex: 1;
 }
 
+/* Project Card Styles (Reverted) */
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -239,13 +318,13 @@ body {
 
 .project-card {
     position: relative;
-    background-color: rgba(230, 230, 230, 0.5);
+    background-color: var(--card-bg);
     height: 56px;
     padding: 0 24px;
     text-decoration: none;
     font-size: 14px;
     font-weight: 400;
-    color: #000000;
+    color: var(--text-main);
     text-align: center;
     display: flex;
     align-items: center;
@@ -261,26 +340,95 @@ body {
     position: absolute;
     inset: 0;
     background:
-        linear-gradient(#364BA8, #364BA8) 0 0/10px 2px no-repeat,
-        linear-gradient(#364BA8, #364BA8) 0 0/2px 10px no-repeat,
-        linear-gradient(#364BA8, #364BA8) 100% 0/10px 2px no-repeat,
-        linear-gradient(#364BA8, #364BA8) 100% 0/2px 10px no-repeat,
-        linear-gradient(#364BA8, #364BA8) 100% 100%/10px 2px no-repeat,
-        linear-gradient(#364BA8, #364BA8) 100% 100%/2px 10px no-repeat,
-        linear-gradient(#364BA8, #364BA8) 0 100%/10px 2px no-repeat,
-        linear-gradient(#364BA8, #364BA8) 0 100%/2px 10px no-repeat;
+        linear-gradient(var(--body-bg), var(--body-bg)) 0 0/10px 2px no-repeat,
+        linear-gradient(var(--body-bg), var(--body-bg)) 0 0/2px 10px no-repeat,
+        linear-gradient(var(--body-bg), var(--body-bg)) 100% 0/10px 2px no-repeat,
+        linear-gradient(var(--body-bg), var(--body-bg)) 100% 0/2px 10px no-repeat,
+        linear-gradient(var(--body-bg), var(--body-bg)) 100% 100%/10px 2px no-repeat,
+        linear-gradient(var(--body-bg), var(--body-bg)) 100% 100%/2px 10px no-repeat,
+        linear-gradient(var(--body-bg), var(--body-bg)) 0 100%/10px 2px no-repeat,
+        linear-gradient(var(--body-bg), var(--body-bg)) 0 100%/2px 10px no-repeat;
     opacity: 0;
     transition: opacity 0.2s ease;
     pointer-events: none;
 }
 
 .project-card:hover {
-    color: #0076FF;
+    color: var(--accent-color);
 }
 
 .project-card:hover::after {
     opacity: 1;
 }
+
+/* Hover Reveal Card Styles */
+.project-reveal-card {
+    position: fixed;
+    width: 320px;
+    background: var(--frame-bg);
+    border: 1px solid var(--border-color);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    filter: url(#liquid);
+}
+
+.reveal-media {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background-color: var(--border-color);
+}
+
+.reveal-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.reveal-headline {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    letter-spacing: -0.5px;
+}
+
+.reveal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 8px;
+    border-top: 1px solid var(--border-color);
+}
+
+.reveal-tags {
+    font-size: 12px;
+    color: var(--text-secondary);
+    /* Slightly lighter color for tags */
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.reveal-logo {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-main);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
 
 /* Right Column Styles — left untouched per placeholder requirement */
 .right-column {
@@ -305,7 +453,7 @@ body {
 .carousel-title {
     font-size: 12px;
     font-weight: 500;
-    color: #000000;
+    color: var(--text-main);
     text-transform: uppercase;
     letter-spacing: 1.5px;
 }
@@ -313,7 +461,7 @@ body {
 .carousel-link {
     font-size: 12px;
     font-weight: 500;
-    color: #0076FF;
+    color: var(--accent-color);
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 1.5px;
@@ -372,11 +520,11 @@ body {
 }
 
 .work-bar {
-    background-color: #0076FF;
+    background-color: var(--accent-color);
     color: #fff;
     padding: 16px 16px;
     border-radius: var(--work-bar-border-radius);
-    border: 1px solid #F2EFE9;
+    border: 1px solid var(--border-color);
     overflow: hidden;
     position: relative;
     width: 100%;

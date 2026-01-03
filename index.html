@@ -27,9 +27,10 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
+<body class="is-loading">
     <div class="container">
         <div class="frame">
+            <div id="preloader"></div>
             <header class="top-bar">
                 <p class="sub-headline">DESIGN PARTNER FOR FOUNDERS & AGENCIES</p>
                 <nav class="top-nav">
@@ -65,12 +66,36 @@
                             <span class="pill">Live Projects</span>
                         </div>
                         <div class="projects-grid">
-                            <a href="https://www.axionclick.com/" target="_blank" class="project-card">Axion Click</a>
-                            <a href="https://chowfast.framer.website/" target="_blank" class="project-card">Chowfast</a>
-                            <a href="https://granville.vercel.app/" target="_blank" class="project-card">Grandville</a>
-                            <a href="https://www.getunruly.com/" target="_blank" class="project-card">Getunruly</a>
-                            <a href="https://www.enesee.agency/" target="_blank" class="project-card">Enesee Agency</a>
-                            <a href="https://shrimppp.pariola.work/" target="_blank" class="project-card">Mofoods</a>
+                            <a href="https://www.axionclick.com/" target="_blank" class="project-card"
+                                data-headline="Transforming neural activity into human ability."
+                                data-tags="DESIGN | FRAMER DEV"
+                                data-image="https://res.cloudinary.com/dwbdylcas/image/upload/v1766924583/Frame_2087330674_soowrn.png"
+                                data-logo="AXION">Axion Click</a>
+
+                            <a href="https://chowfast.framer.website/" target="_blank" class="project-card"
+                                data-headline="Fastest way to order chow in your city." data-tags="DESIGN | FRAMER DEV"
+                                data-image="https://res.cloudinary.com/dwbdylcas/image/upload/v1766924583/Frame_2087330673_ozujrb.png"
+                                data-logo="CHOWFAST">Chowfast</a>
+
+                            <a href="https://granville.vercel.app/" target="_blank" class="project-card"
+                                data-headline="Modern living spaces for modern people." data-tags="DESIGN"
+                                data-image="https://res.cloudinary.com/dwbdylcas/image/upload/v1766924584/Frame_2087330676_kpl4nc.png"
+                                data-logo="GRANDVILLE">Grandville</a>
+
+                            <a href="https://www.getunruly.com/" target="_blank" class="project-card"
+                                data-headline="Unleash your creative potential today." data-tags="DESIGN"
+                                data-image="https://res.cloudinary.com/dwbdylcas/image/upload/v1766924583/Frame_2087330669_ezp3xv.png"
+                                data-logo="UNRULY">Getunruly</a>
+
+                            <a href="https://www.enesee.agency/" target="_blank" class="project-card"
+                                data-headline="Creative agency for the modern world." data-tags="DESIGN | FRAMER DEV"
+                                data-image="https://res.cloudinary.com/dwbdylcas/image/upload/v1766924583/Frame_1000005192_eho55e.png"
+                                data-logo="ENESEE">Enesee Agency</a>
+
+                            <a href="https://shrimppp.pariola.work/" target="_blank" class="project-card"
+                                data-headline="The best seafood in town, delivered." data-tags="DESIGN"
+                                data-image="https://res.cloudinary.com/dwbdylcas/image/upload/v1766924583/Frame_2087330675_rg4sun.png"
+                                data-logo="MOFOODS">Mofoods</a>
                         </div>
                     </div>
 
@@ -155,6 +180,33 @@
 
     <img src="https://res.cloudinary.com/dwbdylcas/image/upload/v1766924583/Frame_2087330675_rg4sun.png"
         class="hover-reveal-img" alt="Hover Preview">
+
+    <!-- Project Hover Reveal Card structure -->
+    <div class="project-reveal-card">
+        <div class="reveal-media">
+            <!-- Optional img can go here -->
+            <img src="https://res.cloudinary.com/dwbdylcas/image/upload/v1766924583/Frame_2087330674_soowrn.png"
+                alt="Project Preview" class="reveal-image">
+        </div>
+        <h3 class="reveal-headline">Headline goes here</h3>
+        <div class="reveal-footer">
+            <span class="reveal-tags">TAGS</span>
+            <div class="reveal-logo">LOGO</div>
+        </div>
+    </div>
+
+    <!-- SVG Filter for Liquid Effect -->
+    <svg style="position: absolute; width: 0; height: 0;">
+        <defs>
+            <filter id="liquid">
+                <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
+                <feDisplacementMap id="displacement" in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R"
+                    yChannelSelector="G" />
+            </filter>
+        </defs>
+    </svg>
+
+    <div class="custom-cursor"></div>
     <script src="script.js"></script>
 </body>
 
