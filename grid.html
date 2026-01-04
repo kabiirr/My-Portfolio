@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kabir - Infinite Shots</title>
+    <link rel="icon" type="image/png"
+        href="https://res.cloudinary.com/dwbdylcas/image/upload/v1766852014/avi_ewnnmq.jpg" />
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/InertiaPlugin.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Override global body to allow scrolling if needed, but here we want internal scroll */
+        body {
+            overflow: hidden;
+        }
+
+        /* Viewport that contains the draggable grid - NOW confined within the frame */
+        .infinite-viewport {
+            flex: 1;
+            /* Fill remaining space in frame */
+            width: 100%;
+            position: relative;
+            /* Relative to frame */
+            overflow: hidden;
+            /* Mask content */
+            cursor: grab;
+            border: 4px solid var(--accent-color);
+            /* Match the visual style requested */
+            background-color: var(--accent-color);
+            /* Background for gaps */
+        }
+
+        .infinite-viewport:active {
+            cursor: grabbing;
+        }
+
+        .infinite-grid {
+            display: flex;
+            flex-wrap: wrap;
+            position: absolute;
+            width: 3000px;
+        }
+
+        .grid-block {
+            display: grid;
+            /* Uniform Grid: 3 columns of equal size */
+            grid-template-columns: repeat(3, 1fr);
+            /* Uniform rows - Reduced by 15% */
+            grid-template-rows: repeat(2, 380px);
+            gap: 4px;
+            width: 1530px;
+            /* Reduced from 1800px */
+            /* Block width */
+            padding: 2px;
+            flex-shrink: 0;
+        }
+
+        .grid-item {
+            position: relative;
+            background-color: var(--frame-bg);
+            overflow: hidden;
+            /* border: 1px solid var(--border-color); Removed as requested */
+            /* Ensure aspect ratio or height is respected via grid-template-rows */
+            height: 100%;
+            width: 100%;
+        }
+
+        .grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .grid-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .center-text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--frame-bg);
+            color: var(--text-main);
+            text-transform: uppercase;
+            font-family: 'Geist Mono', monospace;
+            font-size: 1.5rem;
+            text-align: center;
+            padding: 20px;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        /* Override frame padding for edge-to-edge grid */
+        .frame {
+            padding: 0 !important;
+        }
+
+        /* Re-apply padding to header so it aligns nicely */
+        .top-bar {
+            padding-left: 32px;
+            padding-right: 32px;
+            margin-bottom: 20px;
+        }
+
+        /* Update viewport to be flush */
+        .infinite-viewport {
+            flex: 1;
+            /* Fill remaining space in frame */
+            width: 100%;
+            position: relative;
+            /* Relative to frame */
+            overflow: hidden;
+            /* Mask content */
+            cursor: none;
+            /* Only keep top border to separate from header, remove side/bottom borders for infinite feel */
+            border: none;
+            background-color: rgba(0, 0, 0, 0.1);
+            /* Background for gaps - 10% opacity */
+        }
+
+        .infinite-viewport:active {
+            cursor: none;
+        }
+
+        /* AGGRESSIVE CURSOR HIDING */
+        * {
+            cursor: none !important;
+        }
+
+        .custom-cursor {
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            z-index: 2147483647 !important;
+            /* Max z-index */
+            pointer-events: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Custom Cursor must be direct child of body and high up -->
+    <div class="custom-cursor"></div>
+
+    <div class="container">
+        <div class="frame">
+            <!-- Consistent Header -->
+
+
+            <!-- Floating Navigation Overlay -->
+            <div style="position: absolute; top: 32px; right: 32px; z-index: 100;">
+                <a href="index.html" class="nav-link"
+                    style="background: var(--frame-bg); padding: 8px 16px; border: 1px solid var(--border-color);">←
+                    Back</a>
+            </div>
+
+            <!-- Infinite Grid inside the frame -->
+            <div class="infinite-viewport" id="viewport">
+                <div class="infinite-grid" id="grid">
+                    <!-- Content injected by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.getElementById('grid');
+
+            // Uniform Pattern: 6 equal items per block (3 cols x 2 rows)
+            // We'll cycle through projectImages
+
+            function createBlockHtml() {
+                let html = '<div class="grid-block">';
+                // 6 items per block to fill 3x2 grid
+                for (let i = 0; i < 6; i++) {
+                    const src = projectImages[i % projectImages.length];
+                    // Add index offset for variety if we had more images, 
+                    // but we just tile the same 6 for now.
+                    html += `
+                        <div class="grid-item">
+                            <img src="${src}" alt="Project Shot">
+                        </div>
+                    `;
+                }
+                html += '</div>';
+                return html;
+            }
+
+            // Create 3x3 grid of blocks (9 blocks total) for wrapping
+            let gridContent = '';
+            for (let i = 0; i < 9; i++) {
+                gridContent += createBlockHtml();
+            }
+            grid.innerHTML = gridContent;
+
+            // Dimensions - Reduced by 15%
+            const blockWidth = 1530;
+            const blockHeight = 760; // 2 rows * 380px roughly
+
+            // Set container width to allow 3 blocks side-by-side
+            grid.style.width = (blockWidth * 3) + 'px';
+
+            // Center initial position
+            // We want to start showing center block
+            let xPos = -blockWidth;
+            let yPos = -blockHeight;
+
+            // Apply initial transform using GSAP
+            gsap.set(grid, { x: xPos, y: yPos });
+
+            // Draggable
+            Draggable.create(grid, {
+                type: "x,y",
+                bounds: null, // Infinite
+                inertia: true,
+                edgeResistance: 0,
+                cursor: 'none',
+                activeCursor: 'none',
+                onPress: () => {
+                    document.body.style.cursor = 'none';
+                },
+                onDrag: function (e) {
+                    updateWrap.call(this);
+                    // Force update custom cursor position if e is available
+                    if (e && e.clientX !== undefined) {
+                        gsap.set('.custom-cursor', { x: e.clientX, y: e.clientY });
+                    }
+                },
+                onThrowUpdate: updateWrap
+            });
+
+            function updateWrap() {
+                // Wrap X
+                // Pattern repeats every blockWidth
+                let x = this.x;
+                let y = this.y;
+
+                // If we move right past 0, jump back to -blockWidth
+                if (x > 0) {
+                    x -= blockWidth;
+                }
+                // If we move left past -2*blockWidth, jump forward
+                else if (x < -blockWidth * 2) {
+                    x += blockWidth;
+                }
+
+                // Wrap Y
+                if (y > 0) {
+                    y -= blockHeight;
+                } else if (y < -blockHeight * 2) {
+                    y += blockHeight;
+                }
+
+                if (x !== this.x || y !== this.y) {
+                    this.x = x;
+                    this.y = y;
+                    gsap.set(this.target, { x: x, y: y });
+                }
+            }
+
+            // Add Wheel support
+            window.addEventListener('wheel', (e) => {
+                const draggable = Draggable.get(grid);
+                const dx = -e.deltaX;
+                const dy = -e.deltaY;
+
+                let newX = gsap.getProperty(grid, "x") + dx;
+                let newY = gsap.getProperty(grid, "y") + dy;
+
+                // Wrap logic for wheel
+                if (newX > 0) newX -= blockWidth;
+                else if (newX < -blockWidth * 2) newX += blockWidth;
+
+                if (newY > 0) newY -= blockHeight;
+                else if (newY < -blockHeight * 2) newY += blockHeight;
+
+                gsap.set(grid, { x: newX, y: newY });
+                draggable.update(); // Sync Draggable with new position
+            }, { passive: true });
+        });
+    </script>
+</body>
+
+</html>

@@ -689,3 +689,67 @@ body.is-loading .frame>*:not(#preloader) {
         display: none;
     }
 }
+
+/* Shots Grid Layout (New Page) */
+.shots-layout {
+    width: 100%;
+    /* Take remaining height in the flex frame */
+    flex: 1;
+    overflow-y: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    /* Ensure it has a minimum height to be visible even if empty */
+    min-height: 200px;
+}
+
+.shots-grid {
+    display: grid;
+    /* 2 columns as requested */
+    grid-template-columns: 1fr 1fr;
+    /* Thick borders created by gap + background color */
+    gap: 4px;
+    background-color: var(--accent-color);
+    border: 4px solid var(--accent-color);
+
+    /* Ensure it fits within frame if needed, but let it scroll naturally */
+    width: 100%;
+}
+
+.shot-card {
+    position: relative;
+    background-color: var(--frame-bg);
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    display: block;
+    /* Simpler than flex for this */
+    width: 100%;
+    aspect-ratio: 4/3;
+    /* Define ratio on container */
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.shot-card img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    /* aspect-ratio removed here as parent handles it */
+    filter: none;
+    transition: filter 0.3s ease, transform 0.3s ease;
+    opacity: 1 !important;
+}
+
+.shot-card:hover img {
+    /* Subtle zoom on hover */
+    transform: scale(1.02);
+}
+
+/* Responsive Grid */
+@media (max-width: 768px) {
+    .shots-grid {
+        grid-template-columns: 1fr;
+        /* Single column on mobile */
+    }
+}
