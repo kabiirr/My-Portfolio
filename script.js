@@ -190,7 +190,7 @@ function initThemes() {
         setTheme(randomTheme);
     }
 
-    // Initialize: Priority -> URL Param -> LocalStorage -> Random
+    // Initialize: Priority -> URL Param -> LocalStorage -> Classic Blue (default)
     try {
         const urlParams = new URLSearchParams(window.location.search);
         const urlThemeName = urlParams.get('theme');
@@ -203,10 +203,14 @@ function initThemes() {
         if (targetTheme) {
             setTheme(targetTheme);
         } else {
-            setRandomTheme();
+            // Default to Classic Blue on first load
+            const defaultTheme = themes.find(t => t.name === 'Classic Blue');
+            setTheme(defaultTheme);
         }
     } catch (e) {
-        setRandomTheme();
+        // Fallback to Classic Blue on error
+        const defaultTheme = themes.find(t => t.name === 'Classic Blue');
+        setTheme(defaultTheme);
     }
 
     // Event Listener for Double Click (Empty Space)
@@ -235,7 +239,7 @@ initThemes();
 let currentImageIndex = 0;
 let isTransitioning = false;
 let carouselInterval = null;
-const imageChangeDelay = 3000; // 3 seconds delay between images
+const imageChangeDelay = 2000; // 2 seconds delay between images
 
 // Get both image elements for seamless switching
 const carouselImage1 = document.getElementById('carousel-image-1');
@@ -365,6 +369,7 @@ if (document.readyState === 'loading') {
         initProjectHover();
         initCustomCursor();
         initPreloader();
+        initStampShine();
     });
 } else {
     initCarousel();
@@ -372,6 +377,7 @@ if (document.readyState === 'loading') {
     initProjectHover();
     initCustomCursor();
     initPreloader();
+    initStampShine();
 }
 
 /**
@@ -570,11 +576,15 @@ function initThemes() {
         if (targetTheme) {
             setTheme(targetTheme);
         } else {
-            setRandomTheme();
+            // Default to Classic Blue on first load
+            const defaultTheme = themes.find(t => t.name === 'Classic Blue');
+            setTheme(defaultTheme);
         }
     } catch (e) {
         console.error("Theme initialization error", e);
-        setRandomTheme();
+        // Fallback to Classic Blue on error
+        const defaultTheme = themes.find(t => t.name === 'Classic Blue');
+        setTheme(defaultTheme);
     }
 
     // Event Listener for Double Click (Empty Space)
@@ -625,8 +635,7 @@ function initPreloader() {
 
     preloader.appendChild(fragment);
 
-    // Animate unloading
-    // Create a timeline for the flicker and reveal
+    // Create a timeline for the intro animation + grid reveal
     const tl = gsap.timeline({
         onStart: () => {
             // Prepare text reveal hidden state internally before preloader finishes
@@ -641,21 +650,46 @@ function initPreloader() {
         }
     });
 
-    // Phase 1: Random Flicker (glitch effect)
-    tl.to('.pixel', {
-        autoAlpha: 0,
-        duration: 0,
-        stagger: {
-            amount: 0.5,
-            from: "random",
-            grid: [rows, cols]
-        },
-        yoyo: true,
-        repeat: 1,
-        ease: "none"
-    });
+    // INTRO ANIMATION SEQUENCE
+    // Phase 1: Animate name and title in (close together at center)
+    tl.to('.preloader-name, .preloader-title', {
+        opacity: 1,
+        duration: 0.6,
+        ease: "power2.out",
+        stagger: 0.1
+    }, 0);
 
-    // Phase 2: Full Reveal
+    // Phase 2: Scale in the stamp (pushes name left and title right)
+    tl.to('.preloader-stamp', {
+        opacity: 1,
+        scale: 1.1,
+        duration: 0.8,
+        ease: "power2.out"
+    }, "+=0.3");
+
+    // Simultaneously push name to the left
+    tl.to('.preloader-name', {
+        x: -60,
+        duration: 0.8,
+        ease: "power2.out"
+    }, "<");
+
+    // Simultaneously push title to the right
+    tl.to('.preloader-title', {
+        x: 60,
+        duration: 0.8,
+        ease: "power2.out"
+    }, "<");
+
+    // Phase 3: Fade out all intro elements
+    tl.to('.preloader-content', {
+        opacity: 0,
+        duration: 0.4,
+        ease: "power2.in"
+    }, "+=0.5");
+
+    // GRID ANIMATION SEQUENCE
+    // Phase 4: Grid Reveal (single animation)
     tl.to('.pixel', {
         autoAlpha: 0,
         duration: 0,
@@ -909,5 +943,31 @@ function initHoverReveal() {
                 overwrite: true
             });
         });
+    });
+}
+
+/**
+ * Initialize Stamp Shine Effect
+ * Creates a silver spotlight that follows the cursor over the stamp
+ */
+function initStampShine() {
+    const stampDecoration = document.querySelector('.stamp-decoration');
+    const stampShine = document.querySelector('.stamp-shine');
+
+    if (!stampDecoration || !stampShine) return;
+
+    stampDecoration.addEventListener('mousemove', (e) => {
+        const rect = stampDecoration.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+        // Update the radial gradient position to follow cursor
+        stampShine.style.background = `radial-gradient(
+            circle 80px at ${x}% ${y}%,
+            rgba(192, 192, 192, 0.8) 0%,
+            rgba(220, 220, 220, 0.6) 20%,
+            rgba(255, 255, 255, 0.4) 40%,
+            transparent 70%
+        )`;
     });
 }
