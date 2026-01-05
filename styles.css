@@ -159,7 +159,7 @@ body.is-loading .frame>*:not(#preloader) {
     align-items: flex-start;
     justify-content: space-between;
     gap: 32px;
-    margin-bottom: 0;
+    margin-bottom: 12px;
 }
 
 .top-nav {
@@ -167,21 +167,6 @@ body.is-loading .frame>*:not(#preloader) {
     align-items: center;
     gap: 16px;
     flex-wrap: wrap;
-    flex-shrink: 0;
-    margin-bottom: 8px;
-}
-
-/* Desktop: Position nav to the right of header */
-@media (min-width: 521px) {
-    .top-bar {
-        display: inline-block;
-        margin-bottom: 0;
-    }
-
-    .top-nav {
-        float: right;
-        margin-top: -64px;
-    }
 }
 
 .nav-link {
