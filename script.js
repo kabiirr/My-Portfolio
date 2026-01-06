@@ -119,20 +119,6 @@ function initThemes() {
             }
         },
         {
-            name: "Neon Nights",
-            colors: {
-                "--body-bg": "#0B0C15", /* Deepest Black/Blue */
-                "--frame-bg": "#15161E", /* Dark surface */
-                "--text-main": "#E0E0E0",
-                "--text-secondary": "#94A3B8",
-                "--accent-color": "#4F46E5", /* Indigo */
-                "--card-bg": "rgba(30, 35, 50, 0.6)",
-                "--border-color": "#2A3345",
-                "--cursor-color": "#4F46E5",
-                "--on-accent-color": "#FFFFFF"
-            }
-        },
-        {
             name: "Coffee House",
             colors: {
                 "--body-bg": "#483C32", /* Dark Taupe */
@@ -489,20 +475,6 @@ function initThemes() {
                 "--card-bg": "rgba(255, 230, 220, 0.5)",
                 "--border-color": "#FFD6CC",
                 "--cursor-color": "#4A1C17",
-                "--on-accent-color": "#FFFFFF"
-            }
-        },
-        {
-            name: "Neon Nights",
-            colors: {
-                "--body-bg": "#0B0C15", /* Deepest Black/Blue */
-                "--frame-bg": "#15161E", /* Dark surface */
-                "--text-main": "#E0E0E0",
-                "--text-secondary": "#94A3B8",
-                "--accent-color": "#4F46E5", /* Indigo */
-                "--card-bg": "rgba(30, 35, 50, 0.6)",
-                "--border-color": "#2A3345",
-                "--cursor-color": "#4F46E5",
                 "--on-accent-color": "#FFFFFF"
             }
         },
