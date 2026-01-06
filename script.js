@@ -1,11 +1,17 @@
 // Project images array - replace with your actual image paths
 const projectImages = [
-    'https://res.cloudinary.com/dwbdylcas/image/upload/v1766924583/Frame_2087330674_soowrn.png',
-    'https://res.cloudinary.com/dwbdylcas/image/upload/v1766924583/Frame_2087330673_ozujrb.png',
-    'https://res.cloudinary.com/dwbdylcas/image/upload/v1766924584/Frame_2087330676_kpl4nc.png',
-    'https://res.cloudinary.com/dwbdylcas/image/upload/v1766924583/Frame_2087330669_ezp3xv.png',
-    'https://res.cloudinary.com/dwbdylcas/image/upload/v1766924583/Frame_1000005192_eho55e.png',
-    'https://res.cloudinary.com/dwbdylcas/image/upload/v1766924583/Frame_2087330675_rg4sun.png'
+    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767664032/iuolhen0ilqxjhspzcom_sjvpvu.webp',
+    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767664032/apy6hdu9qnrllwzdleui_rscoqn.webp',
+    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767664032/nmnlxkj3dfza41irdboo_xagvls.webp',
+    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767664032/o4ktx4tjix8vbhb1iwrq_sx2unr.webp',
+    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767664033/zuvvj6zxrmw1qnvda7nr_cnl1ez.webp',
+    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767664101/enieqsg1hxakvvokviox_sjtrdn.webp',
+    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767664101/ve2vtcvp1fxv3vetdm1w_rspgav.webp',
+    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767664101/m6fhzwoliibfpqxhywcf_k3r3mp.webp',
+    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767664101/zny9qrvogzgfa02wa9n3_ckrjpj.webp',
+    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767664101/maitjgandw5wrxvab4uz_xuizln.webp',
+    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767664032/evslgwzhl47xfvgcvnax_duljgf.webp',
+    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767667115/Frame_2087330674_rdxhpl.webp'
 ];
 
 /**
@@ -370,6 +376,7 @@ if (document.readyState === 'loading') {
         initCustomCursor();
         initPreloader();
         initStampShine();
+        initCarouselReveal();
     });
 } else {
     initCarousel();
@@ -378,6 +385,7 @@ if (document.readyState === 'loading') {
     initCustomCursor();
     initPreloader();
     initStampShine();
+    initCarouselReveal();
 }
 
 /**
@@ -970,4 +978,154 @@ function initStampShine() {
             transparent 70%
         )`;
     });
+}
+
+/**
+ * Initialize Carousel Reveal Effect
+ * Creates a cursor-based mask reveal of the next image
+ */
+function initCarouselReveal() {
+    const carousel = document.getElementById('image-carousel');
+    const canvas = document.getElementById('carousel-reveal-canvas');
+    const image1 = document.getElementById('carousel-image-1');
+    const image2 = document.getElementById('carousel-image-2');
+
+    if (!carousel || !canvas || !image1 || !image2) return;
+
+    const ctx = canvas.getContext('2d');
+    let mouseX = 0;
+    let mouseY = 0;
+    let isHovering = false;
+
+    // Grid snapping like custom cursor
+    let lastGridX = -100;
+    let lastGridY = -100;
+    const snap = 20;
+
+    // Trail points for grid-snapped reveals
+    const trailPoints = [];
+    const cursorSize = 20; // Match custom cursor size
+
+    // Set canvas size
+    function resizeCanvas() {
+        const rect = carousel.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+    }
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Mouse events
+    carousel.addEventListener('mouseenter', () => {
+        isHovering = true;
+        gsap.to(canvas, { opacity: 1, duration: 0.3 });
+        // Hide custom cursor
+        const customCursor = document.querySelector('.custom-cursor');
+        if (customCursor) {
+            gsap.to(customCursor, { autoAlpha: 0, duration: 0.2 });
+        }
+    });
+
+    carousel.addEventListener('mouseleave', () => {
+        isHovering = false;
+        gsap.to(canvas, { opacity: 0, duration: 0.3 });
+        trailPoints.length = 0;
+        // Show custom cursor
+        const customCursor = document.querySelector('.custom-cursor');
+        if (customCursor) {
+            gsap.to(customCursor, { autoAlpha: 1, duration: 0.2 });
+        }
+    });
+
+    carousel.addEventListener('mousemove', (e) => {
+        const rect = carousel.getBoundingClientRect();
+        const rawX = e.clientX - rect.left;
+        const rawY = e.clientY - rect.top;
+
+        // Update actual mouse position
+        mouseX = rawX;
+        mouseY = rawY;
+
+        // Calculate grid-snapped position
+        const gridX = Math.round(rawX / snap) * snap;
+        const gridY = Math.round(rawY / snap) * snap;
+
+        // Only add trail point if moved to new grid cell
+        if (gridX !== lastGridX || gridY !== lastGridY) {
+            trailPoints.push({
+                x: gridX,
+                y: gridY,
+                timestamp: Date.now()
+            });
+
+            lastGridX = gridX;
+            lastGridY = gridY;
+        }
+    });
+
+    // Get next image
+    function getNextImage() {
+        const nextIndex = (currentImageIndex + 1) % projectImages.length;
+        return projectImages[nextIndex];
+    }
+
+    // Animation loop
+    function animate() {
+        requestAnimationFrame(animate);
+
+        if (!isHovering) return;
+
+        // Remove old trail points (fade after 500ms like custom cursor)
+        const now = Date.now();
+        const fadeTime = 500;
+        while (trailPoints.length > 0 && now - trailPoints[0].timestamp > fadeTime) {
+            trailPoints.shift();
+        }
+
+        // Clear canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Load and draw next image
+        const nextImageSrc = getNextImage();
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.src = nextImageSrc;
+
+        if (img.complete) {
+            drawReveal(img);
+        } else {
+            img.onload = () => drawReveal(img);
+        }
+    }
+
+    function drawReveal(img) {
+        ctx.save();
+
+        // Create clipping path from trail using pixels (rectangles)
+        if (trailPoints.length > 0) {
+            ctx.beginPath();
+
+            // Draw square pixels at each trail point
+            for (let i = 0; i < trailPoints.length; i++) {
+                const point = trailPoints[i];
+                const size = cursorSize;
+
+                // Draw square pixel at each trail point
+                ctx.rect(point.x - size / 2, point.y - size / 2, size, size);
+            }
+
+            // Add current cursor position as square pixel
+            ctx.rect(mouseX - cursorSize / 2, mouseY - cursorSize / 2, cursorSize, cursorSize);
+
+            ctx.clip();
+
+            // Draw next image only in clipped area (the pixel trail)
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        }
+
+        ctx.restore();
+    }
+
+    animate();
 }
