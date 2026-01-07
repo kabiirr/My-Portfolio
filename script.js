@@ -11,7 +11,8 @@ const projectImages = [
     'https://res.cloudinary.com/dwbdylcas/image/upload/v1767664101/zny9qrvogzgfa02wa9n3_ckrjpj.webp',
     'https://res.cloudinary.com/dwbdylcas/image/upload/v1767664101/maitjgandw5wrxvab4uz_xuizln.webp',
     'https://res.cloudinary.com/dwbdylcas/image/upload/v1767664032/evslgwzhl47xfvgcvnax_duljgf.webp',
-    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767667115/Frame_2087330674_rdxhpl.webp'
+    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767667115/Frame_2087330674_rdxhpl.webp',
+    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767785792/Frame_2147205024_v9wyox.webp'
 ];
 
 /**
@@ -133,16 +134,16 @@ function initThemes() {
             }
         },
         {
-            name: "Glacier Blue",
+            name: "Midnight Slate",
             colors: {
-                "--body-bg": "#0D1822", /* Deep Ocean */
-                "--frame-bg": "#F0F9FF", /* Ice White */
-                "--text-main": "#0C4A6E",
-                "--text-secondary": "#38BDF8", /* Sky Blue */
-                "--accent-color": "#0284C7", /* Ocean Blue */
-                "--card-bg": "rgba(200, 240, 255, 0.5)",
-                "--border-color": "#BAE6FD",
-                "--cursor-color": "#0C4A6E",
+                "--body-bg": "#1E293B", /* Slate 800 - Dark but not pure black */
+                "--frame-bg": "#FFFFFF", /* Pure White */
+                "--text-main": "#0F172A", /* Slate 900 - Very dark for high contrast */
+                "--text-secondary": "#64748B", /* Slate 500 - Medium gray */
+                "--accent-color": "#3B82F6", /* Blue 500 - WCAG AAA on white */
+                "--card-bg": "rgba(248, 250, 252, 0.95)", /* Slate 50 with opacity */
+                "--border-color": "#E2E8F0", /* Slate 200 */
+                "--cursor-color": "#0F172A",
                 "--on-accent-color": "#FFFFFF"
             }
         }
@@ -493,16 +494,16 @@ function initThemes() {
             }
         },
         {
-            name: "Glacier Blue",
+            name: "Midnight Slate",
             colors: {
-                "--body-bg": "#0D1822", /* Deep Ocean */
-                "--frame-bg": "#F0F9FF", /* Ice White */
-                "--text-main": "#0C4A6E",
-                "--text-secondary": "#38BDF8", /* Sky Blue */
-                "--accent-color": "#0284C7", /* Ocean Blue */
-                "--card-bg": "rgba(200, 240, 255, 0.5)",
-                "--border-color": "#BAE6FD",
-                "--cursor-color": "#0C4A6E",
+                "--body-bg": "#1E293B", /* Slate 800 - Dark but not pure black */
+                "--frame-bg": "#FFFFFF", /* Pure White */
+                "--text-main": "#0F172A", /* Slate 900 - Very dark for high contrast */
+                "--text-secondary": "#64748B", /* Slate 500 - Medium gray */
+                "--accent-color": "#3B82F6", /* Blue 500 - WCAG AAA on white */
+                "--card-bg": "rgba(248, 250, 252, 0.95)", /* Slate 50 with opacity */
+                "--border-color": "#E2E8F0", /* Slate 200 */
+                "--cursor-color": "#0F172A",
                 "--on-accent-color": "#FFFFFF"
             }
         }
@@ -876,38 +877,64 @@ function initProjectHover() {
 function initHoverReveal() {
     const links = document.querySelectorAll('.nav-link[data-hover-src]');
     const img = document.querySelector('.hover-reveal-img');
+    const placeholder = document.querySelector('.hover-reveal-placeholder');
     const cursor = document.querySelector('.custom-cursor');
 
-    if (links.length === 0 || !img) return;
+    if (links.length === 0 || !img || !placeholder) return;
 
-    // Center the image on the cursor using percent transforms
+    // Center the image and placeholder on the cursor using percent transforms
     gsap.set(img, { xPercent: -50, yPercent: -50 });
+    gsap.set(placeholder, { xPercent: -50, yPercent: -50 });
 
     // QuickSetter for performance
-    const setX = gsap.quickSetter(img, "x", "px");
-    const setY = gsap.quickSetter(img, "y", "px");
+    const setImgX = gsap.quickSetter(img, "x", "px");
+    const setImgY = gsap.quickSetter(img, "y", "px");
+    const setPlaceholderX = gsap.quickSetter(placeholder, "x", "px");
+    const setPlaceholderY = gsap.quickSetter(placeholder, "y", "px");
 
     // Track mouse movement constantly
     document.addEventListener('mousemove', (e) => {
-        setX(e.clientX);
-        setY(e.clientY);
+        setImgX(e.clientX);
+        setImgY(e.clientY);
+        setPlaceholderX(e.clientX);
+        setPlaceholderY(e.clientY);
     });
 
     links.forEach(link => {
         link.addEventListener('mouseenter', () => {
             const imgSrc = link.getAttribute('data-hover-src');
             if (imgSrc) {
-                img.src = imgSrc;
-                // Hide custom cursor
-                if (cursor) gsap.to(cursor, { autoAlpha: 0, duration: 0.2, overwrite: true });
+                // Try to load the image
+                const testImg = new Image();
+                testImg.onload = () => {
+                    // Image loaded successfully
+                    img.src = imgSrc;
+                    // Hide custom cursor
+                    if (cursor) gsap.to(cursor, { autoAlpha: 0, duration: 0.2, overwrite: true });
 
-                gsap.to(img, {
-                    autoAlpha: 1,
-                    scale: 1,
-                    duration: 0.3,
-                    ease: "power2.out",
-                    overwrite: true
-                });
+                    gsap.to(img, {
+                        autoAlpha: 1,
+                        scale: 1,
+                        duration: 0.3,
+                        ease: "power2.out",
+                        overwrite: true
+                    });
+                };
+
+                testImg.onerror = () => {
+                    // Image failed to load, show placeholder
+                    if (cursor) gsap.to(cursor, { autoAlpha: 0, duration: 0.2, overwrite: true });
+
+                    gsap.to(placeholder, {
+                        autoAlpha: 1,
+                        scale: 1,
+                        duration: 0.3,
+                        ease: "power2.out",
+                        overwrite: true
+                    });
+                };
+
+                testImg.src = imgSrc;
             }
         });
 
@@ -916,6 +943,14 @@ function initHoverReveal() {
             if (cursor) gsap.to(cursor, { autoAlpha: 1, duration: 0.2, overwrite: true });
 
             gsap.to(img, {
+                autoAlpha: 0,
+                scale: 0.8,
+                duration: 0.15,
+                ease: "power2.out",
+                overwrite: true
+            });
+
+            gsap.to(placeholder, {
                 autoAlpha: 0,
                 scale: 0.8,
                 duration: 0.15,

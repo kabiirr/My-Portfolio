@@ -88,6 +88,22 @@ body {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
+.hover-reveal-placeholder {
+    position: fixed;
+    width: 200px;
+    height: 280px;
+    border-radius: 8px;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
 .container {
     min-height: 100vh;
     padding: 20px;
@@ -175,7 +191,7 @@ body.is-loading .frame>*:not(#preloader) {
     font-weight: 400;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--frame-bg);
+    color: #FFFFFF;
     opacity: 0;
     white-space: nowrap;
 }
@@ -938,6 +954,7 @@ body.is-loading .frame>*:not(#preloader) {
 
     .hero-body {
         font-size: 14px;
+        margin-top: 4px;
     }
 
     .frame {
@@ -959,6 +976,20 @@ body.is-loading .frame>*:not(#preloader) {
         display: none;
     }
 
+    .hero-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .currently-text {
+        display: none;
+    }
+
     .image-carousel {
         height: 300px;
     }
@@ -969,7 +1000,7 @@ body.is-loading .frame>*:not(#preloader) {
 
     .main-layout {
         order: 3;
-        padding-bottom: 0;
+        padding-bottom: 5px;
     }
 
     .top-nav {
@@ -979,7 +1010,7 @@ body.is-loading .frame>*:not(#preloader) {
         order: 4;
         width: 100%;
         justify-content: flex-start;
-        padding: 20px 0;
+        padding: 20px 0 0 0;
         margin-top: 20px;
     }
 
