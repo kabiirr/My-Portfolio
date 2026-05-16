@@ -183,26 +183,13 @@ function initThemes() {
         setTheme(randomTheme);
     }
 
-    // Initialize: Priority -> URL Param -> LocalStorage -> Classic Blue (default)
     try {
-        const urlParams = new URLSearchParams(window.location.search);
-        const urlThemeName = urlParams.get('theme');
-        const localThemeName = localStorage.getItem('currentTheme');
-
         // Find theme by Name
-        let targetTheme = themes.find(t => t.name === urlThemeName);
-        if (!targetTheme) targetTheme = themes.find(t => t.name === localThemeName);
-
-        if (targetTheme) {
-            setTheme(targetTheme);
-        } else {
-            // Default to Classic Blue on first load
-            const defaultTheme = themes.find(t => t.name === 'Classic Blue');
-            setTheme(defaultTheme);
-        }
+        let targetTheme = themes.find(t => t.name === 'Dark Mode');
+        setTheme(targetTheme);
     } catch (e) {
-        // Fallback to Classic Blue on error
-        const defaultTheme = themes.find(t => t.name === 'Classic Blue');
+        // Fallback to Dark Mode on error
+        const defaultTheme = themes.find(t => t.name === 'Dark Mode');
         setTheme(defaultTheme);
     }
 
@@ -217,7 +204,7 @@ function initThemes() {
             if (!interactive) {
                 const selection = window.getSelection().toString();
                 if (!selection.trim()) {
-                    setRandomTheme();
+                    // setRandomTheme(); // Theme locked to black
                     if (window.getSelection) window.getSelection().removeAllRanges();
                 }
             }
@@ -544,27 +531,14 @@ function initThemes() {
         setTheme(randomTheme);
     }
 
-    // Initialize: Priority -> URL Param -> LocalStorage -> Random
     try {
-        const urlParams = new URLSearchParams(window.location.search);
-        const urlThemeName = urlParams.get('theme');
-        const localThemeName = localStorage.getItem('currentTheme');
-
         // Find theme by Name
-        let targetTheme = themes.find(t => t.name === urlThemeName);
-        if (!targetTheme) targetTheme = themes.find(t => t.name === localThemeName);
-
-        if (targetTheme) {
-            setTheme(targetTheme);
-        } else {
-            // Default to Classic Blue on first load
-            const defaultTheme = themes.find(t => t.name === 'Classic Blue');
-            setTheme(defaultTheme);
-        }
+        let targetTheme = themes.find(t => t.name === 'Dark Mode');
+        setTheme(targetTheme);
     } catch (e) {
         console.error("Theme initialization error", e);
-        // Fallback to Classic Blue on error
-        const defaultTheme = themes.find(t => t.name === 'Classic Blue');
+        // Fallback to Dark Mode on error
+        const defaultTheme = themes.find(t => t.name === 'Dark Mode');
         setTheme(defaultTheme);
     }
 
@@ -577,7 +551,7 @@ function initThemes() {
             const selection = window.getSelection().toString();
             // Allow checking if selection is just whitespace
             if (!selection.trim()) {
-                setRandomTheme();
+                // setRandomTheme(); // Theme locked to black
                 window.getSelection().removeAllRanges();
             }
         }
