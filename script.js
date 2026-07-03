@@ -344,13 +344,13 @@ function startCarousel() {
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         initCarousel();
-        initCarousel();
         initHoverReveal();
         initProjectHover();
         initCustomCursor();
         initPreloader();
         initStampShine();
         initCarouselReveal();
+        initWebGLBackground();
     });
 } else {
     initCarousel();
@@ -360,6 +360,7 @@ if (document.readyState === 'loading') {
     initPreloader();
     initStampShine();
     initCarouselReveal();
+    initWebGLBackground();
 }
 
 /**
@@ -562,136 +563,129 @@ function initThemes() {
  * Initialize Preloader
  */
 function initPreloader() {
-    const preloader = document.getElementById('preloader');
-    if (!preloader) return;
-
-    // Calculate grid size based on the container size
-    const rect = preloader.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-
-    // We want relatively square pixels, let's pick a column count that works well
-    const cols = 20;
-    const pixelSize = width / cols;
-    const rows = Math.ceil(height / pixelSize);
-
-    // Create pixels
-    const totalPixels = cols * rows;
-    const fragment = document.createDocumentFragment();
-
-    for (let i = 0; i < totalPixels; i++) {
-        const pixel = document.createElement('div');
-        pixel.className = 'pixel';
-        // Ensure pixel dimensions match calculated exactly to prevent gaps
-        pixel.style.width = `${pixelSize}px`;
-        pixel.style.height = `${pixelSize}px`;
-        fragment.appendChild(pixel);
+    const introText = document.querySelector('.preloader-intro-text');
+    if (!introText) {
+        prepareTextReveal();
+        animateEntrance();
+        return;
     }
 
-    preloader.appendChild(fragment);
+    // Prepare text reveal hidden states
+    prepareTextReveal();
 
-    // Create a timeline for the intro animation + grid reveal
-    const tl = gsap.timeline({
-        onStart: () => {
-            // Prepare text reveal hidden state internally before preloader finishes
-            prepareTextReveal();
-        },
-        onComplete: () => {
-            preloader.remove();
-            document.body.classList.remove('is-loading');
+    const tl = gsap.timeline();
 
-            // Trigger the reveal animation
-            animateTextReveal();
-        }
+    // Slide-up + fade in — same motion as headline reveal
+    tl.to(introText, {
+        y: 0,
+        opacity: 1,
+        duration: 0.9,
+        ease: "power3.out"
     });
 
-    // INTRO ANIMATION SEQUENCE
-    // Phase 1: Animate name and title in (close together at center)
-    tl.to('.preloader-name, .preloader-title', {
+    // Hold for a beat
+    tl.to(introText, {
         opacity: 1,
-        duration: 0.6,
-        ease: "power2.out",
-        stagger: 0.1
-    }, 0);
+        duration: 0.7
+    });
 
-    // Phase 2: Scale in the stamp (pushes name left and title right)
-    tl.to('.preloader-stamp', {
-        opacity: 1,
-        scale: 1.1,
-        duration: 0.8,
-        ease: "power2.out"
-    }, "+=0.3");
-
-    // Simultaneously push name to the left
-    tl.to('.preloader-name', {
-        x: -60,
-        duration: 0.8,
-        ease: "power2.out"
-    }, "<");
-
-    // Simultaneously push title to the right
-    tl.to('.preloader-title', {
-        x: 60,
-        duration: 0.8,
-        ease: "power2.out"
-    }, "<");
-
-    // Phase 3: Fade out all intro elements
-    tl.to('.preloader-content', {
+    // Fade out, then trigger page entrance
+    tl.to(introText, {
+        y: -20,
         opacity: 0,
-        duration: 0.4,
-        ease: "power2.in"
-    }, "+=0.5");
-
-    // GRID ANIMATION SEQUENCE
-    // Phase 4: Grid Reveal (single animation)
-    tl.to('.pixel', {
-        autoAlpha: 0,
-        duration: 0,
-        stagger: {
-            amount: 1,
-            from: "random",
-            grid: [rows, cols]
-        },
-        ease: "none",
-        delay: 0.2
+        duration: 0.5,
+        ease: "power2.in",
+        onComplete: () => {
+            animateEntrance();
+        }
     });
 }
 
-const revealSelectors = [
-    '.top-bar .sub-headline',
-    '.nav-link',
-    '.cta',
-    '.hero .sub-headline',
-    '.main-headline',
-    '.live-title',
-    '.live-text',
-    '.project-card',
-    '.pill',
-    '.work-bar',
-    '.work-meta-bottom',
-    '.carousel-header',
-    '.carousel-link',
-    '.carousel-image.active'
-].join(', ');
+function prepareHeadlineReveal() {
+    const headline = document.querySelector('.hero-headline');
+    if (!headline) return;
+
+    const text = headline.textContent.trim();
+    const words = text.split(/\s+/);
+    headline.innerHTML = words.map(word => {
+        return `<span class="word-mask"><span class="reveal-word">${word}</span></span>`;
+    }).join(' ');
+}
 
 function prepareTextReveal() {
-    // Set initial state for content reveal
-    gsap.set(revealSelectors, {
+    // Split the headline into animated word blocks
+    prepareHeadlineReveal();
+
+    // Set initial state for reveal words
+    gsap.set('.reveal-word', {
+        y: '100%'
+    });
+
+    // Set initial state for supporting elements
+    const supportingSelectors = [
+        '.top-nav-centered .nav-link',
+        '.hero-sub-tag',
+        '.project-badges .badge-item',
+        '.bottom-bar-centered .footer-pill'
+    ].join(', ');
+
+    gsap.set(supportingSelectors, {
         y: 20,
         autoAlpha: 0
     });
 }
 
-function animateTextReveal() {
-    gsap.to(revealSelectors, {
+function animateEntrance() {
+    // Remove is-loading immediately so elements are not hidden by CSS during transition
+    document.body.classList.remove('is-loading');
+
+    const tl = gsap.timeline({
+        onComplete: () => {
+            const preloader = document.getElementById('preloader');
+            if (preloader) preloader.remove();
+        }
+    });
+
+    // 1. Fade out the white preloader screen
+    tl.to('#preloader', {
+        opacity: 0,
+        duration: 0.5,
+        ease: "power2.out"
+    });
+
+    // 2. Zoom out background WebGL canvas/body slightly
+    tl.fromTo('#webgl-bg', {
+        scale: 1.08
+    }, {
+        scale: 1,
+        duration: 1.2,
+        ease: "power3.out"
+    }, 0); // starts at same time as preloader fade
+
+    // 3. Masked reveal of the headline words
+    tl.to('.reveal-word', {
+        y: '0%',
+        duration: 0.9,
+        stagger: 0.02,
+        ease: "power3.out"
+    }, 0.2); // starts shortly after preloader fade starts
+
+    // 4. Reveal navigation, sub-tag, badges, and footer pills
+    const supportingSelectors = [
+        '.top-nav-centered .nav-link',
+        '.hero-sub-tag',
+        '.project-badges .badge-item',
+        '.bottom-bar-centered .footer-pill'
+    ].join(', ');
+
+    tl.to(supportingSelectors, {
         y: 0,
         autoAlpha: 1,
-        duration: 1,
-        stagger: 0.03, // Fast ripple
+        duration: 0.8,
+        stagger: 0.03,
         ease: "power3.out",
-        clearProps: "transform" // Keep opacity 1, remove transform
-    });
+        clearProps: "transform"
+    }, 0.3);
 }
 
 
@@ -702,62 +696,130 @@ function initCustomCursor() {
     const cursor = document.querySelector('.custom-cursor');
     if (!cursor) return;
 
-    gsap.set(cursor, { xPercent: -50, yPercent: -50 });
+    const cursorR = cursor.querySelector('.cursor-r');
+    const cursorG = cursor.querySelector('.cursor-g');
+    const cursorB = cursor.querySelector('.cursor-b');
+    const cursorDot = cursor.querySelector('.cursor-dot');
 
-    const setX = gsap.quickSetter(cursor, "x", "px");
-    const setY = gsap.quickSetter(cursor, "y", "px");
+    if (!cursorR || !cursorG || !cursorB || !cursorDot) return;
 
-    // Track previous grid position
+    // Set initial position
+    gsap.set(cursor, { xPercent: -50, yPercent: -50, x: window.innerWidth / 2, y: window.innerHeight / 2 });
+
+    let targetX = window.innerWidth / 2;
+    let targetY = window.innerHeight / 2;
+    let currentX = targetX;
+    let currentY = targetY;
+
+    // Track sub-ring offsets (relative to cursor center)
+    let rX = 0, rY = 0;
+    let gX = 0, gY = 0;
+    let bX = 0, bY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        targetX = e.clientX;
+        targetY = e.clientY;
+    });
+
+    const setCursorX = gsap.quickSetter(cursor, "x", "px");
+    const setCursorY = gsap.quickSetter(cursor, "y", "px");
+
+    const setRX = gsap.quickSetter(cursorR, "x", "px");
+    const setRY = gsap.quickSetter(cursorR, "y", "px");
+    const setGX = gsap.quickSetter(cursorG, "x", "px");
+    const setGY = gsap.quickSetter(cursorG, "y", "px");
+    const setBX = gsap.quickSetter(cursorB, "x", "px");
+    const setBY = gsap.quickSetter(cursorB, "y", "px");
+
+    // Track previous grid position for the round trail dots
     let lastGridX = -100;
     let lastGridY = -100;
     const snap = 20;
 
-    document.addEventListener('mousemove', (e) => {
-        setX(e.clientX);
-        setY(e.clientY);
+    function updateCursor() {
+        // Interpolate main cursor container
+        let dx = targetX - currentX;
+        let dy = targetY - currentY;
+        currentX += dx * 0.15; // Smooth lag
+        currentY += dy * 0.15;
 
-        // Check if cursor is visible (opacity is approximately 1)
-        // We use getComputedStyle or check opacity directly if set by GSAP
-        // Getting style from GSAP cache is faster: gsap.getProperty(cursor, "opacity")
+        setCursorX(currentX);
+        setCursorY(currentY);
+
+        // Check if cursor is visible (so we don't calculate if hidden)
         const opacity = gsap.getProperty(cursor, "opacity");
-        if (opacity < 0.5) return; // Don't draw trail if cursor is hidden
+        if (opacity >= 0.5) {
+            // Calculate velocity/displacement from target
+            let velX = targetX - currentX;
+            let velY = targetY - currentY;
 
-        // Grid Trail Logic
-        // Calculate current grid position (top-left of the cell)
-        const gridX = Math.round(e.clientX / snap) * snap;
-        const gridY = Math.round(e.clientY / snap) * snap;
+            // Offset the sub-rings in opposite directions proportional to velocity
+            // Red splits along velocity direction
+            let rTargetX = velX * 0.45;
+            let rTargetY = velY * 0.45;
+            // Blue splits in opposite direction
+            let bTargetX = -velX * 0.45;
+            let bTargetY = -velY * 0.45;
+            // Green splits slightly perpendicular or less
+            let gTargetX = velX * 0.1;
+            let gTargetY = velY * 0.1;
 
-        // If we moved to a new cell
-        if (gridX !== lastGridX || gridY !== lastGridY) {
-            // Create a pixel at the NEW position (marking the path)
-            const pixel = document.createElement('div');
-            pixel.className = 'trail-pixel';
+            // Spring-like interpolation for sub-rings back to center
+            rX += (rTargetX - rX) * 0.12;
+            rY += (rTargetY - rY) * 0.12;
+            gX += (gTargetX - gX) * 0.12;
+            gY += (gTargetY - gY) * 0.12;
+            bX += (bTargetX - bX) * 0.12;
+            bY += (bTargetY - bY) * 0.12;
 
-            // Adjust to center the 20x20 pixel on the grid point 
-            // The main cursor is centered (-50%, -50%). 
-            // If we want pixels to align with a grid, we should place them at top-left gridX, gridY 
-            // but since cursor is free-floating, let's span the pixel at the snapped coordinates.
-            // Since gridX is rounded, it snaps to nearest 20.
-            // Let's position it simply.
-            pixel.style.left = `${gridX}px`;
-            pixel.style.top = `${gridY}px`;
-            // Center it to align with the visual snap feel.
-            pixel.style.transform = 'translate(-50%, -50%)';
+            setRX(rX);
+            setRY(rY);
+            setGX(gX);
+            setGY(gY);
+            setBX(bX);
+            setBY(bY);
 
-            document.body.appendChild(pixel);
+            // Grid Trail Logic using interpolated coordinates
+            const gridX = Math.round(currentX / snap) * snap;
+            const gridY = Math.round(currentY / snap) * snap;
 
-            // Animate it: Wait, then flicker/fade
-            gsap.to(pixel, {
-                opacity: 0,
-                duration: 0.5,
-                delay: 0.1, // Short persistence
-                ease: "power2.out",
-                onComplete: () => pixel.remove()
-            });
+            if (gridX !== lastGridX || gridY !== lastGridY) {
+                const pixel = document.createElement('div');
+                pixel.className = 'trail-pixel';
+                pixel.style.left = `${gridX}px`;
+                pixel.style.top = `${gridY}px`;
+                pixel.style.transform = 'translate(-50%, -50%)';
+                document.body.appendChild(pixel);
 
-            lastGridX = gridX;
-            lastGridY = gridY;
+                gsap.to(pixel, {
+                    opacity: 0,
+                    duration: 0.5,
+                    delay: 0.1,
+                    ease: "power2.out",
+                    onComplete: () => pixel.remove()
+                });
+
+                lastGridX = gridX;
+                lastGridY = gridY;
+            }
         }
+
+        requestAnimationFrame(updateCursor);
+    }
+
+    updateCursor();
+
+    // Interactive hover states for links and buttons
+    const interactiveElements = document.querySelectorAll('a, button, [role="button"], .nav-link, .project-card, .trusted-by a');
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            gsap.to([cursorR, cursorG, cursorB], { scale: 1.4, borderWidth: '1px', duration: 0.3, ease: "power2.out", overwrite: "auto" });
+            gsap.to(cursorDot, { scale: 0, duration: 0.2, ease: "power2.out", overwrite: "auto" });
+        });
+        el.addEventListener('mouseleave', () => {
+            gsap.to([cursorR, cursorG, cursorB], { scale: 1.0, borderWidth: '1.5px', duration: 0.3, ease: "power2.out", overwrite: "auto" });
+            gsap.to(cursorDot, { scale: 1.0, duration: 0.2, ease: "power2.out", overwrite: "auto" });
+        });
     });
 }
 /**
@@ -1109,4 +1171,213 @@ function initCarouselReveal() {
     }
 
     animate();
+}
+
+/**
+ * Initialize WebGL background video distortion (Three.js)
+ */
+function initWebGLBackground() {
+    const canvas = document.getElementById('webgl-bg');
+    const video = document.querySelector('.bg-video');
+    if (!canvas || !video) return;
+
+    // Wait for video to be ready
+    if (video.readyState >= 2) {
+        setupWebGL();
+    } else {
+        video.addEventListener('loadeddata', setupWebGL);
+    }
+
+    function setupWebGL() {
+        // Ensure video is playing
+        video.play().catch(e => console.log("Video autoplay blocked, retrying on interaction."));
+
+        // Get actual canvas layout dimensions (instead of window viewport)
+        let canvasRect = canvas.getBoundingClientRect();
+
+        // 1. Create WebGL Renderer, Scene, Camera
+        const renderer = new THREE.WebGLRenderer({
+            canvas: canvas,
+            antialias: false,
+            powerPreference: "high-performance"
+        });
+        renderer.setSize(canvasRect.width, canvasRect.height, false);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        const scene = new THREE.Scene();
+        // Flat 2D orthographic camera
+        const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+        // 2. Create Offscreen Canvas for Mouse Trail
+        const trailCanvas = document.createElement('canvas');
+        trailCanvas.width = 256;
+        trailCanvas.height = 256;
+        const trailCtx = trailCanvas.getContext('2d');
+
+        // Initialize trail canvas with neutral color (R:127, G:127, B:0)
+        trailCtx.fillStyle = 'rgb(127, 127, 0)';
+        trailCtx.fillRect(0, 0, 256, 256);
+
+        // 3. Create WebGL Textures
+        const videoTexture = new THREE.VideoTexture(video);
+        videoTexture.minFilter = THREE.LinearFilter;
+        videoTexture.magFilter = THREE.LinearFilter;
+        videoTexture.format = THREE.RGBFormat;
+
+        const trailTexture = new THREE.CanvasTexture(trailCanvas);
+        trailTexture.minFilter = THREE.LinearFilter;
+        trailTexture.magFilter = THREE.LinearFilter;
+
+        // 4. Calculate Aspect Ratios for object-fit: cover with safety margin
+        const videoAspect = 1920 / 1080;
+        const uvScale = new THREE.Vector2(1, 1);
+
+        function updateUvScale() {
+            const screenAspect = canvasRect.width / canvasRect.height;
+            // Add a 5% safety margin (0.95 factor) to prevent edge smearing/stretching during distortion
+            if (screenAspect > videoAspect) {
+                uvScale.set(0.95, (videoAspect / screenAspect) * 0.95);
+            } else {
+                uvScale.set((screenAspect / videoAspect) * 0.95, 0.95);
+            }
+        }
+        updateUvScale();
+
+        // 5. Shader Material with unscaled UVs (vUvRaw) for trail mapping
+        const vertexShader = `
+            varying vec2 vUv;
+            varying vec2 vUvRaw;
+            uniform vec2 uUvScale;
+            void main() {
+                vUv = (uv - 0.5) * uUvScale + 0.5;
+                vUvRaw = uv;
+                gl_Position = vec4(position, 1.0);
+            }
+        `;
+
+        const fragmentShader = `
+            uniform sampler2D uVideo;
+            uniform sampler2D uTrail;
+            varying vec2 vUv;
+            varying vec2 vUvRaw;
+            void main() {
+                // Sample displacement map using raw unscaled UV coordinates
+                vec4 trail = texture2D(uTrail, vUvRaw);
+                
+                // Vector component coordinates [0, 1] mapped to [-1, 1]
+                vec2 displacement = vec2(trail.r - 0.5, trail.g - 0.5) * 2.0;
+                float force = trail.b; // Speed maps to blue channel
+                
+                // Warp video UVs based on displacement vector (0.18 force for premium look)
+                vec2 distortedUv = vUv - displacement * force * 0.18;
+                distortedUv = clamp(distortedUv, 0.001, 0.999);
+                
+                // Apply chromatic aberration (RGB split) based on force
+                float r = texture2D(uVideo, distortedUv + vec2(force * 0.015, 0.0)).r;
+                float g = texture2D(uVideo, distortedUv).g;
+                float b = texture2D(uVideo, distortedUv - vec2(force * 0.015, 0.0)).b;
+                
+                gl_FragColor = vec4(r, g, b, 1.0);
+            }
+        `;
+
+        const material = new THREE.ShaderMaterial({
+            vertexShader: vertexShader,
+            fragmentShader: fragmentShader,
+            uniforms: {
+                uVideo: { value: videoTexture },
+                uTrail: { value: trailTexture },
+                uUvScale: { value: uvScale }
+            },
+            depthWrite: false,
+            depthTest: false
+        });
+
+        // 6. Create Fullscreen Plane Mesh
+        const geometry = new THREE.PlaneGeometry(2, 2);
+        const mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+
+        // 7. Track Cursor Velocity and Draw to Canvas
+        let targetMouseX = window.innerWidth / 2;
+        let targetMouseY = window.innerHeight / 2;
+        let currentMouseX = targetMouseX;
+        let currentMouseY = targetMouseY;
+        let lastTrailX = currentMouseX;
+        let lastTrailY = currentMouseY;
+
+        document.addEventListener('mousemove', (e) => {
+            targetMouseX = e.clientX;
+            targetMouseY = e.clientY;
+        });
+
+        // 8. Animation Loop
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Fade trail canvas towards neutral displacement color (127, 127, 0)
+            trailCtx.fillStyle = 'rgb(127, 127, 0)';
+            trailCtx.globalAlpha = 0.04; // Slower decay rate for premium fluid effect
+            trailCtx.fillRect(0, 0, 256, 256);
+            trailCtx.globalAlpha = 1.0;
+
+            // Interpolate mouse coordinates for smooth lag effect
+            let dx = targetMouseX - currentMouseX;
+            let dy = targetMouseY - currentMouseY;
+            currentMouseX += dx * 0.15;
+            currentMouseY += dy * 0.15;
+
+            // Calculate velocity between frames
+            let trailDx = currentMouseX - lastTrailX;
+            let trailDy = currentMouseY - lastTrailY;
+            let dist = Math.sqrt(trailDx * trailDx + trailDy * trailDy);
+
+            if (dist > 0.1) {
+                // Convert viewport coordinates to trail canvas coordinates relative to canvasRect
+                let relativeMouseX = currentMouseX - canvasRect.left;
+                let relativeMouseY = currentMouseY - canvasRect.top;
+                let lastRelativeMouseX = lastTrailX - canvasRect.left;
+                let lastRelativeMouseY = lastTrailY - canvasRect.top;
+
+                let scaledX = (relativeMouseX / canvasRect.width) * 256;
+                let scaledY = (relativeMouseY / canvasRect.height) * 256;
+                let prevScaledX = (lastRelativeMouseX / canvasRect.width) * 256;
+                let prevScaledY = (lastRelativeMouseY / canvasRect.height) * 256;
+
+                // Scale values to fit [0, 255]
+                // Neutral is 127. Pos/Neg direction mapped left/right.
+                let r = Math.min(Math.max(127 + trailDx * 3, 0), 255);
+                let g = Math.min(Math.max(127 + trailDy * 3, 0), 255);
+                let b = Math.min(Math.max(dist * 6, 0), 255);
+
+                trailCtx.beginPath();
+                trailCtx.strokeStyle = `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`;
+                trailCtx.lineWidth = 18;
+                trailCtx.lineCap = 'round';
+                trailCtx.moveTo(prevScaledX, prevScaledY);
+                trailCtx.lineTo(scaledX, scaledY);
+                trailCtx.stroke();
+            }
+
+            lastTrailX = currentMouseX;
+            lastTrailY = currentMouseY;
+
+            // Flag WebGL texture for update
+            trailTexture.needsUpdate = true;
+
+            // Render scene
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // 9. Resize & Scroll Handling (keeping canvasRect and WebGL size in sync)
+        window.addEventListener('resize', () => {
+            canvasRect = canvas.getBoundingClientRect();
+            renderer.setSize(canvasRect.width, canvasRect.height, false);
+            updateUvScale();
+        });
+        window.addEventListener('scroll', () => {
+            canvasRect = canvas.getBoundingClientRect();
+        });
+    }
 }

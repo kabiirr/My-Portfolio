@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
     <meta name="description"
         content="Whether it's a fast Framer site or a custom full‑stack build, I create a clear, high‑performing experience that guides visitors to take action.">
     <title>Kabir - Design Partner for Founders & Agencies</title>
@@ -13,14 +14,13 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Kabir - Design Partner for Founders & Agencies">
-    <meta property="og:description" content="Crafting websites that get you noticed and actually drive conversions.">
+    <meta property="og:description" content="From first impression to conversion, every detail matters.">
     <meta property="og:image" content="https://res.cloudinary.com/dwbdylcas/image/upload/v1767793597/ogg_tce4pw.webp">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:title" content="Kabir - Design Partner for Founders & Agencies">
-    <meta property="twitter:description"
-        content="Crafting websites that get you noticed and actually drive conversions.">
+    <meta property="twitter:description" content="From first impression to conversion, every detail matters.">
     <meta property="twitter:image"
         content="https://res.cloudinary.com/dwbdylcas/image/upload/v1767793597/ogg_tce4pw.webp">
 
@@ -32,153 +32,101 @@
             y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
         })(window, document, "clarity", "script", "uxm9pxnkxs");
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap"
+        rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="stylesheet" href="styles.css?v=1.0.5">
+
+    <!-- JSON-LD Structured Data for Person/Portfolio -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Kabir Anifowose",
+      "jobTitle": "Web Designer & Framer Developer",
+      "url": "https://contra.com/kabir_anifowose",
+      "image": "https://res.cloudinary.com/dwbdylcas/image/upload/v1766852014/avi_ewnnmq.jpg",
+      "sameAs": [
+        "https://x.com/Abdulkabirrr",
+        "https://contra.com/kabir_anifowose",
+        "https://www.linkedin.com/in/kabir-anifowose/"
+      ],
+      "description": "Design partner for founders & agencies. From first impression to conversion, every detail matters."
+    }
+    </script>
 </head>
 
 <body class="is-loading">
     <div class="container">
         <div class="frame">
-            <video autoplay loop muted playsinline class="bg-video">
+            <canvas id="webgl-bg"></canvas>
+            <video autoplay loop muted playsinline class="bg-video" style="display: none;" crossorigin="anonymous">
                 <source
                     src="https://res.cloudinary.com/dwbdylcas/video/upload/1113930_Scenery_Wild_1920x1080_szrb8w.mp4"
                     type="video/mp4">
             </video>
             <div class="video-overlay"></div>
             <div id="preloader">
-                <div class="preloader-content">
-                    <div class="preloader-name">KABIR ANIFOWOSE</div>
-                    <div class="preloader-stamp">
-                        <img src="https://res.cloudinary.com/dwbdylcas/image/upload/v1767615462/Frame_2147205067_bbjfhr.svg"
-                            alt="Stamp">
-                    </div>
-                    <div class="preloader-title">WEB DESIGNER</div>
-                </div>
+                <div class="preloader-intro-text">For the selected</div>
             </div>
-            <header class="top-bar">
-                <span class="header-tag">DESIGN PARTNER FOR FOUNDERS & AGENCIES</span>
-                <h1 class="main-headline">
-                    Standout design meets <br>
-                    conversion-first strategy.<br>
-                </h1>
-            </header>
-
-            <nav class="top-nav">
-                <a href="https://www.linkedin.com/in/kabir-anifowose/" class="nav-link" id="link-linkedin"
-                    data-hover-src="https://res.cloudinary.com/dwbdylcas/image/upload/v1767150260/Rectangle_7354_vieyrj.png">Linkedin</a>
-                <a href="https://x.com/Abdulkabirrr" class="nav-link"
-                    data-hover-src="https://res.cloudinary.com/dwbdylcas/image/upload/v1767150260/Rectangle_7357_fwukua.png">X(Twitter)</a>
-                <a href="https://contra.com/kabir_anifowose" class="nav-link"
-                    data-hover-src="https://res.cloudinary.com/dwbdylcas/image/upload/v1767150260/Rectangle_7358_nppncp.png">Contra</a>
+            <!-- Centered Top Navigation -->
+            <nav class="top-nav-centered">
+                <a href="https://x.com/Abdulkabirrr" target="_blank" class="nav-link">Twitter</a>
+                <a href="https://contra.com/kabir_anifowose" target="_blank" class="nav-link">Contra</a>
+                <a href="mailto:anifowsekb@gmail.com" class="nav-link">Mail</a>
             </nav>
 
-            <div class="hero">
-                <p class="hero-body">
-                    I help startups turn ideas into clear, high-performing websites. Whether it’s a quick Framer launch
-                    or a custom build, everything I ship is designed to look distinct and guide people to take action.
-                </p>
-                <div class="hero-buttons">
-                    <a href="https://cal.com/kabirrr/15mins?overlayCalendar=true" target="_blank"
-                        class="btn btn-primary">Book Discovery
-                        call</a>
-                    <a href="mailto:anifowsekb@gmail.com" class="btn btn-secondary btn-email">
-                        <span class="btn-text-default">ANIFOWSEKB@GMAIL.COM</span>
-                        <span class="btn-text-hover">SEND A MAIL</span>
-                    </a>
+            <!-- Centered Main Content Area -->
+            <main class="hero-centered">
+                <div class="hero-sub-tag">DESIGN PARTNER FOR FOUNDERS & AGENCIES</div>
+
+                <h1 class="hero-headline">
+                    From first impression to conversion, every detail matters.
+                </h1>
+
+                <!-- Badge row for projects -->
+                <div class="project-badges">
+                    <a href="https://www.axionclick.com/" target="_blank" class="project-card badge-item"
+                        data-headline="Transforming neural activity into human ability." data-tags="DESIGN | FRAMER DEV"
+                        data-image="https://res.cloudinary.com/dwbdylcas/image/upload/v1767633665/aw6x58yv0v6vddbmc6so_cfpiuq.webp"
+                        data-logo="AXION">Axion Click</a>
+
+                    <a href="https://www.enesee.agency/" target="_blank" class="project-card badge-item"
+                        data-headline="Creative agency for the modern world." data-tags="DESIGN | FRAMER DEV"
+                        data-image="https://res.cloudinary.com/dwbdylcas/image/upload/v1767633665/dadmmnch1fei8odrg6gw_dupiys.webp"
+                        data-logo="ENESEE">eNESEE AGENCY</a>
+
+                    <!-- <a href="https://chowfast.framer.website/" target="_blank" class="project-card badge-item"
+                        data-headline="Fastest way to order chow in your city."
+                        data-tags="DESIGN | FRAMER DEV"
+                        data-image="https://res.cloudinary.com/dwbdylcas/image/upload/v1767633666/xbaoh7ul7ymzglxyxscw_efona3.webp"
+                        data-logo="CHOWFAST">Web design and FRAMER DEV</a> -->
+
+                    <a href="https://granville.vercel.app/" target="_blank" class="project-card badge-item"
+                        data-headline="Modern inverters for living spaces" data-tags="WEB DESIGN"
+                        data-image="https://res.cloudinary.com/dwbdylcas/image/upload/v1767633664/fplmbvg9mqxhkrbutmfm_n0agrk.webp"
+                        data-logo="GRANDVILLE">Granville</a>
                 </div>
-            </div>
+            </main>
 
-            <div class="stamp-decoration">
-                <div class="stamp-shine"></div>
-            </div>
-
-            <section class="main-layout">
-                <div class="left-stack">
-                    <div class="live-column">
-                        <div class="live-title">
-                            <div class="beacon-container">
-                                <div class="beacon-core"></div>
-                                <div class="beacon-signal"></div>
-                            </div>
-                            <span class="pill">Live Projects</span>
-                        </div>
-                        <div class="projects-grid">
-                            <div class="project-item">
-                                <a href="https://www.axionclick.com/" target="_blank" class="project-card"
-                                    data-headline="Transforming neural activity into human ability."
-                                    data-tags="DESIGN | FRAMER DEV"
-                                    data-image="https://res.cloudinary.com/dwbdylcas/image/upload/v1767633665/aw6x58yv0v6vddbmc6so_cfpiuq.webp"
-                                    data-logo="AXION">AXION CLICK</a>
-                                <div class="project-tag-new">WEB DESIGN AND FRAMER DEV</div>
-                            </div>
-
-                            <div class="project-item">
-                                <a href="https://chowfast.framer.website/" target="_blank" class="project-card"
-                                    data-headline="Fastest way to order chow in your city."
-                                    data-tags="DESIGN | FRAMER DEV"
-                                    data-image="https://res.cloudinary.com/dwbdylcas/image/upload/v1767633666/xbaoh7ul7ymzglxyxscw_efona3.webp"
-                                    data-logo="CHOWFAST">CHOWFAST</a>
-                                <div class="project-tag-new">WEB DESIGN AND FRAMER DEV</div>
-                            </div>
-
-                            <div class="project-item">
-                                <a href="https://granville.vercel.app/" target="_blank" class="project-card"
-                                    data-headline="Modern inverters for living spaces" data-tags="DESIGN"
-                                    data-image="https://res.cloudinary.com/dwbdylcas/image/upload/v1767633664/fplmbvg9mqxhkrbutmfm_n0agrk.webp"
-                                    data-logo="GRANDVILLE">GRANDVILLE</a>
-                                <div class="project-tag-new">WEB DESIGN AND 3D DESIGN</div>
-                            </div>
-
-                            <div class="project-item">
-                                <a href="https://www.enesee.agency/" target="_blank" class="project-card"
-                                    data-headline="Creative agency for the modern world."
-                                    data-tags="DESIGN | FRAMER DEV"
-                                    data-image="https://res.cloudinary.com/dwbdylcas/image/upload/v1767633665/dadmmnch1fei8odrg6gw_dupiys.webp"
-                                    data-logo="ENESEE">ENESEE AGENCY</a>
-                                <div class="project-tag-new">WEB DESIGN AND FRAMER DEV</div>
-                            </div>
-
-                            <div class="project-item" style="display: none;">
-                                <a href="https://shrimppp.pariola.work/" target="_blank" class="project-card"
-                                    data-headline="The best seafood in town, delivered." data-tags="DESIGN"
-                                    data-image="https://res.cloudinary.com/dwbdylcas/image/upload/v1767633665/yjtb5jobpunuyhaigi7z_txbmwk.webp"
-                                    data-logo="MOFOODS">MO FOODS</a>
-                                <div class="project-tag-new">WEB DESIGN</div>
-                            </div>
-
-                            <div class="project-item">
-                                <a href="https://cal.com/kabirrr/15mins?overlayCalendar=true" target="_blank"
-                                    class="project-card" data-headline="Book us today to occupy this space"
-                                    data-tags="DESIGN"
-                                    data-image="https://res.cloudinary.com/dwbdylcas/image/upload/v1767783249/blank_rwccw8.webp"
-                                    data-logo="YOUR COMPANY">YOUR WEBSITE</a>
-                                <div class="project-tag-new">WEB DESIGN / FRAMER DEV / CUSTOM CODE</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <section class="work-section current-work-only">
-                        <div class="current-work">
-                            CURRENTLY AT <a href="https://www.hex.inc/" target="_blank" class="work-link">HEX - CONTRACT
-                                DESIGNER</a>
-                        </div>
-                    </section>
-                </div>
-
-                <div class="right-column" style="display: none;">
-                    <div class="carousel-header">
-                        <span class="carousel-title">SHOTS</span>
-                        <!-- <a href="grid.html" class="carousel-link">VIEW GRID</a> -->
-                    </div>
-                    <div class="image-carousel" id="image-carousel">
-                        <img src="" alt="Project Image" class="carousel-image active" id="carousel-image-1">
-                        <img src="" alt="Project Image" class="carousel-image" id="carousel-image-2">
-                        <canvas id="carousel-reveal-canvas" class="carousel-reveal-canvas"></canvas>
+            <!-- Centered Bottom Navigation -->
+            <footer class="bottom-bar-centered">
+                <div class="footer-pill footer-pill-left">
+                    <span class="trusted-label">TRUSTED BY</span>
+                    <div class="trusted-links">
+                        <a href="https://www.hex.inc/" target="_blank" class="trusted-link">hex inc</a>
+                        <a href="https://wearecheck.co/" target="_blank" class="trusted-link">CHECK</a>
+                        <a href="https://chronicle-labs.com/" target="_blank" class="trusted-link">CHRONICLE LABS</a>
                     </div>
                 </div>
-            </section>
+                <a href="https://cal.com/kabirrr/15mins" class="footer-pill footer-pill-right">
+                    <span>Book Discovery Call</span>
+                    <i class="ph ph-arrow-right cta-icon"></i>
+                </a>
+            </footer>
         </div>
     </div>
 
@@ -211,8 +159,13 @@
         </defs>
     </svg>
 
-    <div class="custom-cursor"></div>
-    <script src="script.js"></script>
+    <div class="custom-cursor">
+        <div class="cursor-rgb cursor-r"></div>
+        <div class="cursor-rgb cursor-g"></div>
+        <div class="cursor-rgb cursor-b"></div>
+        <div class="cursor-dot"></div>
+    </div>
+    <script src="script.js?v=1.0.1"></script>
 </body>
 
 </html>
