@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kabiirr.github.io/My-Portfolio/sitemap.xml
+Sitemap: https://kabir.works/sitemap.xml
