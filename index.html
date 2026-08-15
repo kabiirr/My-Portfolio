@@ -68,8 +68,11 @@
     <div class="container">
         <div class="frame">
             <canvas id="webgl-bg"></canvas>
-            <video autoplay loop muted playsinline class="bg-video" style="display: none;" crossorigin="anonymous">
-                <source src="https://ik.imagekit.io/kabirrr/bg-scenery-720p.mp4" type="video/mp4">
+            <video autoplay loop muted playsinline class="bg-video" style="display: none;">
+                <!-- Self-hosted from the repo (886KB). Keeps the video off ImageKit entirely, whose
+                     free-plan video transformation quota is exhausted. Same-origin, so the WebGL
+                     texture is never tainted and no crossorigin attribute is needed. -->
+                <source src="assets/media/bg-hero.mp4" type="video/mp4">
             </video>
             <div class="video-overlay"></div>
             <div id="preloader">
@@ -112,6 +115,20 @@
                         data-headline="Modern inverters for living spaces" data-tags="WEB DESIGN"
                         data-image="https://ik.imagekit.io/kabirrr/work-granville.webp?tr=w-640,f-auto,q-80"
                         data-logo="GRANDVILLE" aria-label="View Granville project">Granville</a>
+
+                    <!-- Wilan.webp and Chronicle.webp are both over ImageKit's 25MP limit, so they 404
+                         without an explicit resize in ?tr= — never strip the transform from these two.
+                         Wilan is a near-square section capture, so it's cropped 16:9 from the top to keep
+                         the headline; the alternative hero shot is live at work-wilan.webp (AR 1.6). -->
+                    <a href="https://www.wilaninstitute.com/" target="_blank" class="project-card badge-item"
+                        data-headline="Propelling women forward. Transforming Africa." data-tags="DESIGN"
+                        data-image="https://ik.imagekit.io/kabirrr/Wilan.webp?tr=w-640,h-360,fo-top,f-auto,q-80"
+                        data-logo="WILAN" aria-label="View Wilan Institute project">Wilan Institute</a>
+
+                    <a href="https://chronicle-labs.com/" target="_blank" class="project-card badge-item"
+                        data-headline="Prove your AI agents work before launch." data-tags="DESIGN"
+                        data-image="https://ik.imagekit.io/kabirrr/Chronicle.webp?tr=w-640,f-auto,q-80"
+                        data-logo="CHRONICLE" aria-label="View Chronicle Labs project">Chronicle Labs</a>
                 </div>
             </main>
 

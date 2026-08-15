@@ -1,6 +1,7 @@
 .DS_Store
 
 # Source media, kept locally as a backup of what's uploaded to ImageKit.
-# Images are committed (~13MB) so the originals are never lost again;
-# video is excluded because GitHub Pages shouldn't carry 30MB of MP4.
-assets/media/*.mp4
+# Images are committed (~13MB) so the originals are never lost again.
+# The 30MB master is excluded; the 886KB delivered hero video IS committed,
+# so there's a durable copy and a same-origin fallback if ImageKit is ever unavailable.
+assets/media/bg-scenery-720p.mp4
