@@ -1,19 +1,27 @@
-// Project images array - replace with your actual image paths
+// Media host. Every asset URL on the site derives from this one value —
+// change it here (and the literal URLs in index.html's <head>) to move CDNs.
+const MEDIA_BASE = 'https://ik.imagekit.io/kabirrr';
+
+// ImageKit transform: cap width, auto-negotiate webp/avif, quality 80.
+// Grid tiles render ~510px wide, so 1024 covers 2x retina.
+const SHOT_TRANSFORM = '?tr=w-1024,f-auto,q-80';
+
+// Project images — displayed as tiles in grid.html
 const projectImages = [
-    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767664032/iuolhen0ilqxjhspzcom_sjvpvu.webp',
-    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767664032/apy6hdu9qnrllwzdleui_rscoqn.webp',
-    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767664032/nmnlxkj3dfza41irdboo_xagvls.webp',
-    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767664032/o4ktx4tjix8vbhb1iwrq_sx2unr.webp',
-    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767664033/zuvvj6zxrmw1qnvda7nr_cnl1ez.webp',
-    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767664101/enieqsg1hxakvvokviox_sjtrdn.webp',
-    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767664101/ve2vtcvp1fxv3vetdm1w_rspgav.webp',
-    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767664101/m6fhzwoliibfpqxhywcf_k3r3mp.webp',
-    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767664101/zny9qrvogzgfa02wa9n3_ckrjpj.webp',
-    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767664101/maitjgandw5wrxvab4uz_xuizln.webp',
-    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767664032/evslgwzhl47xfvgcvnax_duljgf.webp',
-    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767667115/Frame_2087330674_rdxhpl.webp',
-    'https://res.cloudinary.com/dwbdylcas/image/upload/v1767785792/Frame_2147205024_v9wyox.webp'
-];
+    'shot-01.webp',
+    'shot-02.webp',
+    'shot-03.webp',
+    'shot-04.webp',
+    'shot-05.webp',
+    'shot-06.webp',
+    'shot-07.webp',
+    'shot-08.webp',
+    'shot-09.webp',
+    'shot-10.webp',
+    'shot-11.webp',
+    'shot-12.png',
+    'shot-13.jpg'
+].map(name => `${MEDIA_BASE}/${name}${SHOT_TRANSFORM}`);
 
 /**
  * Initialize Random Theme - Moved UP for immediate execution

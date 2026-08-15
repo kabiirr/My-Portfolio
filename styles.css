@@ -505,11 +505,11 @@ body.is-loading .container {
     pointer-events: none;
     z-index: 100;
     background-color: var(--text-main);
-    -webkit-mask-image: url('https://res.cloudinary.com/dwbdylcas/image/upload/v1767615462/Frame_2147205067_bbjfhr.svg');
+    -webkit-mask-image: url('https://ik.imagekit.io/kabirrr/stamp.svg');
     -webkit-mask-size: contain;
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center;
-    mask-image: url('https://res.cloudinary.com/dwbdylcas/image/upload/v1767615462/Frame_2147205067_bbjfhr.svg');
+    mask-image: url('https://ik.imagekit.io/kabirrr/stamp.svg');
     mask-size: contain;
     mask-repeat: no-repeat;
     mask-position: center;
@@ -520,11 +520,11 @@ body.is-loading .container {
     position: absolute;
     inset: 0;
     background-color: var(--body-bg);
-    -webkit-mask-image: url('https://res.cloudinary.com/dwbdylcas/image/upload/v1767615462/Frame_2147205067_bbjfhr.svg');
+    -webkit-mask-image: url('https://ik.imagekit.io/kabirrr/stamp.svg');
     -webkit-mask-size: contain;
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center;
-    mask-image: url('https://res.cloudinary.com/dwbdylcas/image/upload/v1767615462/Frame_2147205067_bbjfhr.svg');
+    mask-image: url('https://ik.imagekit.io/kabirrr/stamp.svg');
     mask-size: contain;
     mask-repeat: no-repeat;
     mask-position: center;
@@ -571,11 +571,11 @@ body.is-loading .container {
             rgba(220, 220, 220, 0.9) 20%,
             rgba(192, 192, 192, 0.7) 40%,
             transparent 70%);
-    -webkit-mask-image: url('https://res.cloudinary.com/dwbdylcas/image/upload/v1767615462/Frame_2147205067_bbjfhr.svg');
+    -webkit-mask-image: url('https://ik.imagekit.io/kabirrr/stamp.svg');
     -webkit-mask-size: contain;
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center;
-    mask-image: url('https://res.cloudinary.com/dwbdylcas/image/upload/v1767615462/Frame_2147205067_bbjfhr.svg');
+    mask-image: url('https://ik.imagekit.io/kabirrr/stamp.svg');
     mask-size: contain;
     mask-repeat: no-repeat;
     mask-position: center;
