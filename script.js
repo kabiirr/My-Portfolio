@@ -3,10 +3,10 @@
 const MEDIA_BASE = 'https://ik.imagekit.io/kabirrr';
 
 // ImageKit transform: cap width, auto-negotiate webp/avif, quality 80.
-// Grid tiles render ~510px wide, so 1024 covers 2x retina.
+// Carousel images render ~510px wide, so 1024 covers 2x retina.
 const SHOT_TRANSFORM = '?tr=w-1024,f-auto,q-80';
 
-// Project images — displayed as tiles in grid.html
+// Project images — cycled by the homepage carousel
 const projectImages = [
     'shot-01.webp',
     'shot-02.webp',

@@ -1,0 +1,976 @@
+/* ==========================================================================
+   Works page (grid.html) — light table / pile / index
+   Base design: Figma MCws2TSRqHQPUcELEVfnRx, node 2093:786
+   ========================================================================== */
+
+:root {
+    --color-canvas: #000;
+    --color-ink: #fff;
+    --color-ink-muted: rgb(255 255 255 / 0.4);
+    --color-ink-faint: rgb(255 255 255 / 0.12);
+    --color-glass: rgb(238 238 238 / 0.05);
+    --color-glass-strong: rgb(20 20 20 / 0.72);
+    --color-focus: #8ab4ff;
+
+    --font-ui: 'Inter', system-ui, sans-serif;
+    --font-mono: 'Geist Mono', ui-monospace, monospace;
+
+    --radius: 6px;
+    --tracking-caps: 0.125em; /* Figma: 1.5px at 12px */
+    --blur: 10px;
+    --gutter: 24px;
+    --bar-h: 44px;
+    --chrome-h: 32px; /* top and bottom chrome */
+
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    background: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-ui);
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+    overscroll-behavior: none;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+kbd {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    letter-spacing: 0;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: var(--color-ink-faint);
+    color: var(--color-ink-muted);
+}
+
+:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 3px;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.skip-link {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 100;
+    padding: 10px 14px;
+    background: var(--color-ink);
+    color: var(--color-canvas);
+    border-radius: var(--radius);
+    translate: 0 -200%;
+}
+
+.skip-link:focus-visible {
+    translate: 0 0;
+}
+
+/* Shared caps label style, straight from the Figma bar */
+.caps,
+.chip,
+.views__btn,
+.trusted,
+.cta,
+.coords,
+.case__count,
+.case__tags,
+.stage__hint,
+.pile__hint {
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 500;
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: var(--bar-h);
+    padding: 0 16px;
+    border-radius: var(--radius);
+    background: var(--color-glass);
+    backdrop-filter: blur(var(--blur));
+    -webkit-backdrop-filter: blur(var(--blur));
+    transition: background-color 0.2s;
+}
+
+.chip:hover {
+    background: rgb(238 238 238 / 0.12);
+}
+
+.chip--icon {
+    justify-content: center;
+    width: var(--bar-h);
+    padding: 0;
+}
+
+.chip[aria-pressed="true"] {
+    background: var(--color-ink);
+    color: var(--color-canvas);
+}
+
+/* --------------------------------------------------------------------------
+   Top chrome
+   -------------------------------------------------------------------------- */
+.chrome-top {
+    position: fixed;
+    inset: var(--gutter) var(--gutter) auto;
+    z-index: 20;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 12px;
+    pointer-events: none;
+}
+
+.chrome-top > * {
+    pointer-events: auto;
+}
+
+.chrome-top__right {
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.chrome-top .chip,
+.chrome-top .coords {
+    white-space: nowrap;
+    min-height: var(--chrome-h);
+    padding: 0 12px;
+    font-size: 11px;
+}
+
+.chrome-top .chip--icon {
+    width: var(--chrome-h);
+    padding: 0;
+}
+
+/* Sound toggle: waves when on, a cross when muted */
+.sound-icon__on,
+[data-action="sound"][aria-pressed="true"] .sound-icon__off {
+    display: none;
+}
+
+[data-action="sound"][aria-pressed="true"] .sound-icon__on {
+    display: inline;
+}
+
+/* Top chrome sits over the shots, so it needs more than the Figma bar's 5% glass */
+.chrome-top .chip:not([aria-pressed="true"]),
+.coords {
+    background: var(--color-glass-strong);
+}
+
+.coords {
+    align-items: center;
+    min-height: var(--bar-h);
+    padding: 0 14px;
+    border-radius: var(--radius);
+    backdrop-filter: blur(var(--blur));
+    -webkit-backdrop-filter: blur(var(--blur));
+}
+
+.chip--back {
+    justify-self: start;
+}
+
+.coords {
+    display: flex;
+    gap: 10px;
+    color: var(--color-ink-muted);
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+}
+
+.coords b {
+    font-weight: 500;
+    color: var(--color-ink);
+}
+
+.views {
+    position: relative;
+    display: flex;
+    padding: 3px;
+    border-radius: calc(var(--radius) + 3px);
+    background: var(--color-glass-strong);
+    backdrop-filter: blur(var(--blur));
+    -webkit-backdrop-filter: blur(var(--blur));
+}
+
+.views__btn {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: calc(var(--chrome-h) - 6px);
+    padding: 0 10px;
+    font-size: 11px;
+    border-radius: var(--radius);
+    color: var(--color-ink-muted);
+    transition: color 0.3s;
+}
+
+.views__btn[aria-pressed="true"] {
+    color: var(--color-canvas);
+}
+
+/* Sliding white pill behind the active view; works.js sets its geometry */
+.views__pill {
+    position: absolute;
+    top: 3px;
+    left: 0;
+    height: calc(var(--chrome-h) - 6px);
+    width: var(--pill-w, 0);
+    translate: var(--pill-x, 0) 0;
+    border-radius: var(--radius);
+    background: var(--color-ink);
+    transition: translate 0.5s var(--ease-out), width 0.5s var(--ease-out);
+}
+
+/* --------------------------------------------------------------------------
+   Bottom bar (content from Figma 2093:5688, sized like the top chrome)
+   -------------------------------------------------------------------------- */
+.chrome-bottom {
+    position: fixed;
+    inset: auto var(--gutter) var(--gutter);
+    z-index: 20;
+    display: flex;
+    gap: 12px;
+    pointer-events: none;
+}
+
+.chrome-bottom > * {
+    pointer-events: auto;
+}
+
+/* Same size and glass as the top chrome */
+.trusted,
+.cta {
+    display: flex;
+    align-items: center;
+    min-height: var(--chrome-h);
+    padding: 0 12px;
+    border-radius: var(--radius);
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.trusted {
+    gap: 10px;
+    background: var(--color-glass-strong);
+    backdrop-filter: blur(var(--blur));
+    -webkit-backdrop-filter: blur(var(--blur));
+}
+
+.trusted__label {
+    color: var(--color-ink-muted);
+}
+
+.trusted a {
+    transition: opacity 0.2s;
+}
+
+.trusted a:hover {
+    opacity: 0.6;
+}
+
+/* The one primary action: a white chip, like the active state up top */
+.cta {
+    gap: 8px;
+    margin-left: auto;
+    background: var(--color-ink);
+    color: var(--color-canvas);
+    transition: background-color 0.2s;
+}
+
+.cta:hover,
+.cta:focus-visible {
+    background: rgb(255 255 255 / 0.85);
+}
+
+.cta__arrow {
+    width: 14px;
+    height: 14px;
+    filter: invert(1); /* the Figma arrow is white; the chip is white */
+}
+
+/* --------------------------------------------------------------------------
+   View 1: stage / light table
+   -------------------------------------------------------------------------- */
+.stage {
+    position: fixed;
+    inset: 0;
+    overflow: clip; /* clip, not hidden: focusing a tile must never scroll the stage */
+    touch-action: none;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.stage.is-dragging {
+    cursor: grabbing;
+}
+
+.stage__gl {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.world {
+    position: absolute;
+    inset: 0;
+    transform-origin: 50% 50%;
+    /* No will-change: it would freeze rasterisation at 1× and blur zoomed-in shots */
+}
+
+.tile {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #111;
+    transition: opacity 0.4s, filter 0.4s;
+    cursor: inherit;
+}
+
+.tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    transition: scale 0.6s var(--ease-out);
+}
+
+/* Spotlight: hovering one shot dims the rest of the table */
+.world.has-hover .tile:not(.is-hover) {
+    opacity: 0.6;
+    filter: grayscale(0.3);
+}
+
+.tile.is-hover img {
+    scale: 1.04;
+}
+
+/* WebGL draws the shots; the DOM tiles stay for hit-testing, focus and labels */
+.stage.gl-on .tile[data-shot] {
+    background: transparent;
+}
+
+.stage.gl-on .tile[data-shot] img {
+    visibility: hidden;
+}
+
+.stage.gl-on .world.has-hover .tile[data-shot] {
+    opacity: 1;
+    filter: none;
+}
+
+/* Long captures hint that there's more below */
+.tile--long::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-ink) var(--p, 0%), transparent 0);
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+/* Text tile that fills the empty slot in the Figma collage */
+.tile--note {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 14px;
+    background: none;
+    border: 1px solid var(--color-ink-faint);
+    text-align: left;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+}
+
+.world.is-fast .tile--note {
+    opacity: 0;
+    transition-duration: 0.15s;
+}
+
+.tile--note strong {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 22px;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    text-transform: none;
+    font-weight: 500;
+    color: var(--color-ink);
+}
+
+.stage__hint,
+.pile__hint {
+    position: fixed;
+    left: 50%;
+    bottom: calc(var(--gutter) + var(--chrome-h) + 16px);
+    translate: -50% 0;
+    margin: 0;
+    padding: 8px 12px;
+    border-radius: var(--radius);
+    background: var(--color-glass-strong);
+    backdrop-filter: blur(var(--blur));
+    -webkit-backdrop-filter: blur(var(--blur));
+    color: var(--color-ink-muted);
+    white-space: nowrap;
+    pointer-events: none;
+    transition: opacity 0.6s;
+}
+
+.stage__hint.is-gone {
+    opacity: 0;
+}
+
+/* --------------------------------------------------------------------------
+   View 2: pile
+   -------------------------------------------------------------------------- */
+.pile {
+    position: fixed;
+    inset: 0;
+    overflow: clip;
+    touch-action: none;
+}
+
+.card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #111;
+    box-shadow: 0 30px 60px -20px rgb(0 0 0 / 0.9), 0 0 0 1px rgb(255 255 255 / 0.06);
+    cursor: grab;
+    will-change: transform;
+}
+
+.card:active {
+    cursor: grabbing;
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   View 3: index — clotheslines (geometry is driven by works.js)
+   -------------------------------------------------------------------------- */
+.index {
+    position: fixed;
+    inset: 0;
+    overflow: clip;
+    touch-action: pan-y;
+}
+
+.lines__svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.line__rope {
+    fill: none;
+    stroke: rgb(255 255 255 / 0.55);
+    stroke-width: 1.25;
+}
+
+.line__shot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: 0 0;
+    will-change: transform;
+}
+
+/* Wooden pegs at both top corners of every hung shot */
+.line__shot::before,
+.line__shot::after {
+    content: "";
+    position: absolute;
+    top: -9px;
+    z-index: 1;
+    width: 5px;
+    height: 15px;
+    border-radius: 1.5px;
+    background: #d8cfbf;
+    box-shadow: inset -1px 0 0 rgb(0 0 0 / 0.18);
+}
+
+.line__shot::before {
+    left: 14%;
+}
+
+.line__shot::after {
+    right: 14%;
+}
+
+/* Title: a container for letters that works.js positions one by one */
+.line__title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-family: var(--font-ui);
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+    /* Room for each letter's tilt, so narrow ones (I, L) don't merge into neighbours */
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    outline: none;
+}
+
+.line__ch {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    transform-origin: 50% 0;
+    will-change: transform;
+}
+
+/* Laid out inline once so works.js can measure each letter */
+.line__title.is-measuring .line__ch {
+    position: static;
+    display: inline-block;
+}
+
+.line__title:focus-visible .line__ch {
+    color: var(--color-focus);
+}
+
+.line__shot {
+    padding: 0;
+    border-radius: 2px;
+    background: #111;
+    box-shadow: 0 18px 30px -16px rgb(0 0 0 / 0.9);
+}
+
+.line__shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 2px;
+    pointer-events: none;
+    transition: filter 0.3s;
+}
+
+.lines:has(.line__shot:hover) .line__shot:not(:hover) img {
+    filter: brightness(0.6);
+}
+
+/* --------------------------------------------------------------------------
+   View switching. Before works.js runs, only the index shows.
+   -------------------------------------------------------------------------- */
+.stage,
+.pile,
+.index {
+    transition: opacity 0.5s var(--ease-out), visibility 0.5s;
+}
+
+body:not([data-view="canvas"]) .stage,
+body:not([data-view="index"]) .index {
+    opacity: 0;
+    visibility: hidden;
+}
+
+body[data-view="index"] .stage__hint {
+    display: none;
+}
+
+/* --------------------------------------------------------------------------
+   Case view: the image centred, a slim bar of info underneath
+   -------------------------------------------------------------------------- */
+.case {
+    --case-pad: calc(var(--gutter) + var(--chrome-h) + 24px);
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+}
+
+.case__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgb(0 0 0 / 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.case__media {
+    position: absolute;
+    inset: var(--case-pad) var(--gutter);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+}
+
+.case__img {
+    max-width: min(100%, 1280px);
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    border-radius: 4px;
+    object-fit: contain;
+    box-shadow: 0 40px 80px -30px rgb(0 0 0 / 0.9);
+}
+
+/* Full-page captures: a centred, scrollable column */
+.case__media.is-long {
+    display: block;
+    left: 50%;
+    right: auto;
+    width: min(720px, 100% - 2 * var(--gutter));
+    translate: -50% 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border-radius: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: rgb(255 255 255 / 0.3) transparent;
+}
+
+.case__media.is-long .case__img {
+    width: 100%;
+    max-width: none;
+    max-height: none;
+    border-radius: 0;
+}
+
+.case__info {
+    position: absolute;
+    inset: auto var(--gutter) var(--gutter);
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 12px;
+    min-height: var(--chrome-h);
+}
+
+.case__meta {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    min-width: 0;
+    white-space: nowrap;
+}
+
+.case__count {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-ink-muted);
+}
+
+.case__title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+}
+
+.case__tags {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+}
+
+.case__thumbs {
+    display: flex;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.case__thumbs button {
+    display: block;
+    width: 40px;
+    height: 26px;
+    border-radius: 3px;
+    overflow: hidden;
+    opacity: 0.4;
+    transition: opacity 0.2s;
+}
+
+.case__thumbs button[aria-current="true"],
+.case__thumbs button:hover {
+    opacity: 1;
+}
+
+.case__thumbs button[aria-current="true"] {
+    outline: 1px solid var(--color-ink);
+    outline-offset: 2px;
+}
+
+.case__thumbs img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+}
+
+.case__actions {
+    justify-self: end;
+    display: flex;
+    gap: 6px;
+}
+
+/* Bar controls use the chrome size */
+.case .chip {
+    min-height: var(--chrome-h);
+    padding: 0 12px;
+    font-size: 11px;
+    background: var(--color-glass-strong);
+}
+
+.case .chip--icon {
+    width: var(--chrome-h);
+    padding: 0;
+}
+
+.case .chip:hover {
+    background: rgb(60 60 60 / 0.8);
+}
+
+.case__visit {
+    background: var(--color-ink) !important;
+    color: var(--color-canvas);
+}
+
+.case__visit[hidden] {
+    display: none;
+}
+
+.case__close {
+    position: absolute;
+    top: var(--gutter);
+    right: var(--gutter);
+}
+
+/* --------------------------------------------------------------------------
+   Help sheet
+   -------------------------------------------------------------------------- */
+.help {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: grid;
+    place-items: center;
+    padding: var(--gutter);
+    background: rgb(0 0 0 / 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.help[hidden] {
+    display: none;
+}
+
+.help__card {
+    width: min(420px, 100%);
+    padding: 24px;
+    border-radius: 10px;
+    background: #111;
+    box-shadow: 0 0 0 1px var(--color-ink-faint);
+}
+
+.help h2 {
+    margin: 0 0 16px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+}
+
+.help dl {
+    margin: 0 0 20px;
+}
+
+.help dl div {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 0;
+    border-top: 1px solid var(--color-ink-faint);
+    font-size: 14px;
+}
+
+.help dt {
+    color: var(--color-ink-muted);
+}
+
+.help dd {
+    margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Cursor label (fine pointers only)
+   -------------------------------------------------------------------------- */
+.cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 60;
+    pointer-events: none;
+    display: none;
+}
+
+.cursor__label {
+    display: block;
+    translate: -50% -50%;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: var(--color-ink);
+    color: var(--color-canvas);
+    font-size: 11px;
+    line-height: 14px;
+    font-weight: 500;
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+    white-space: nowrap;
+    scale: 0;
+    transition: scale 0.35s var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .cursor {
+        display: block;
+    }
+
+    .cursor.is-on .cursor__label {
+        scale: 1;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 1080px) {
+    .coords {
+        display: none;
+    }
+}
+
+@media (max-width: 860px) {
+    .trusted {
+        display: none;
+    }
+}
+
+@media (max-width: 640px) {
+    :root {
+        --gutter: 16px;
+    }
+
+    .chrome-top {
+        grid-template-columns: auto 1fr auto;
+    }
+
+    .views {
+        justify-self: center;
+    }
+
+    .views__btn {
+        padding: 0 10px;
+    }
+
+    [data-action="overview"],
+    [data-action="sound"],
+    .case__tags,
+    .case__thumbs {
+        display: none;
+    }
+
+    .case__info {
+        grid-template-columns: 1fr auto;
+    }
+
+    .chip--back {
+        padding: 0 12px;
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Coordinates only mean something on the canvas */
+body:not([data-view="canvas"]) .coords {
+    display: none;
+}

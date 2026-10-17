@@ -5,3 +5,7 @@
 # The 30MB master is excluded; the 886KB delivered hero video IS committed,
 # so there's a durable copy and a same-origin fallback if ImageKit is ever unavailable.
 assets/media/bg-scenery-720p.mp4
+
+# Full-size Figma exports for the works page. The page uses the optimised
+# copies in assets/works/shots/, so these ~75MB originals stay local.
+assets/works/*.png

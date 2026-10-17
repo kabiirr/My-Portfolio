@@ -6,28 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="index, follow">
     <meta name="description"
-        content="Whether it's a fast Framer site or a custom full‑stack build, I create a clear, high‑performing experience that guides visitors to take action.">
+        content="Selected works by Kabir, design partner for founders and agencies. Drag around the light table, throw the pile, or browse live projects on the line.">
     <title>Kabir - Design Partner for Founders & Agencies</title>
     <link rel="icon" type="image/jpeg" href="https://ik.imagekit.io/kabirrr/avatar.jpg?tr=w-180" />
     <link rel="canonical" href="https://kabir.works/" />
-    <link rel="preconnect" href="https://ik.imagekit.io" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://kabir.works/">
     <meta property="og:title" content="Kabir - Design Partner for Founders & Agencies">
-    <meta property="og:description" content="From first impression to conversion, every detail matters.">
-    <!-- 1200x630 — served untransformed so crawlers get the exact declared dimensions -->
+    <meta property="og:description" content="Selected works by Kabir, design partner for founders and agencies. Drag around the light table, throw the pile, or browse live projects on the line.">
     <meta property="og:image" content="https://ik.imagekit.io/kabirrr/og.webp">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-
-    <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:title" content="Kabir - Design Partner for Founders & Agencies">
-    <meta property="twitter:description" content="From first impression to conversion, every detail matters.">
+    <meta property="twitter:description" content="Selected works by Kabir, design partner for founders and agencies. Drag around the light table, throw the pile, or browse live projects on the line.">
     <meta property="twitter:image" content="https://ik.imagekit.io/kabirrr/og.webp">
 
     <!-- Microsoft Clarity -->
@@ -38,13 +31,6 @@
             y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
         })(window, document, "clarity", "script", "uxm9pxnkxs");
     </script>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap"
-        rel="stylesheet">
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <link rel="stylesheet" href="styles.css?v=1.1.0">
 
     <!-- JSON-LD Structured Data for Person/Portfolio -->
     <script type="application/ld+json">
@@ -63,130 +49,133 @@
       "description": "Design partner for founders & agencies. From first impression to conversion, every detail matters."
     }
     </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="works.css?v=2.19.0">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Draggable.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/InertiaPlugin.min.js" defer></script>
+    <script src="works-gl.js?v=2.19.0" defer></script>
+    <script src="works-sound.js?v=2.19.0" defer></script>
+    <script src="works.js?v=2.19.0" defer></script>
 </head>
 
-<body class="is-loading">
-    <div class="container">
-        <div class="frame">
-            <canvas id="webgl-bg"></canvas>
-            <video autoplay loop muted playsinline class="bg-video" style="display: none;">
-                <!-- Self-hosted from the repo (886KB). Keeps the video off ImageKit entirely, whose
-                     free-plan video transformation quota is exhausted. Same-origin, so the WebGL
-                     texture is never tainted and no crossorigin attribute is needed. -->
-                <source src="assets/media/bg-hero.mp4" type="video/mp4">
-            </video>
-            <div class="video-overlay"></div>
-            <div id="preloader">
-                <div class="preloader-intro-text">For the selected</div>
+<body data-view="canvas">
+    <a class="skip-link" href="#works-index">Skip to project list</a>
+
+    <!-- Top chrome -->
+    <header class="chrome-top">
+        <a href="alt.html" class="chip chip--back" aria-label="About Kabir (the original homepage)">
+            Kabir
+        </a>
+
+        <nav class="views" aria-label="Choose a view">
+            <span class="views__pill" aria-hidden="true"></span>
+            <button class="views__btn" type="button" data-view="canvas" aria-pressed="true">Canvas</button>
+            <button class="views__btn" type="button" data-view="pile" aria-pressed="false">Pile</button>
+            <button class="views__btn" type="button" data-view="index" aria-pressed="false">Index</button>
+        </nav>
+
+        <div class="chrome-top__right">
+            <output class="coords" aria-hidden="true">
+                <span>X <b data-coord="x">+0000</b></span>
+                <span>Y <b data-coord="y">+0000</b></span>
+                <span><b data-coord="z">100</b>%</span>
+            </output>
+            <button class="chip chip--icon" type="button" data-action="sound" aria-pressed="false" aria-label="Interface sounds" title="Sound (M)">
+                <svg class="sound-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M2.5 6h2.25L8 3.25v9.5L4.75 10H2.5z" fill="currentColor" stroke="none"/>
+                    <path class="sound-icon__on" d="M10.5 5.75a3 3 0 0 1 0 4.5M12.25 4a5.5 5.5 0 0 1 0 8"/>
+                    <path class="sound-icon__off" d="M10.5 6l3 4M13.5 6l-3 4"/>
+                </svg>
+            </button>
+            <button class="chip" type="button" data-action="overview" aria-pressed="false" title="Overview (Z)">Zoom out</button>
+            <button class="chip chip--icon" type="button" data-action="help" aria-label="Keyboard shortcuts" aria-expanded="false" aria-controls="help">?</button>
+        </div>
+    </header>
+
+    <main id="main">
+        <h1 class="sr-only">Selected works by Kabir</h1>
+
+        <!-- View 1: infinite light table. Tiles are injected by works.js. -->
+        <section class="stage" id="stage" aria-label="Project canvas. Drag or scroll to explore.">
+            <canvas class="stage__gl" aria-hidden="true"></canvas>
+            <div class="world" id="world"></div>
+            <p class="stage__hint" aria-hidden="true">Drag, scroll or throw. Click any shot.</p>
+        </section>
+
+        <!-- View 2: physics-ish pile of cards -->
+        <section class="pile" id="pile" aria-label="Project pile. Drag and throw the cards." hidden>
+            <p class="pile__hint" aria-hidden="true">Throw them around. <kbd>R</kbd> to reshuffle.</p>
+        </section>
+
+        <!-- View 3: live projects, each on its own clothesline. The skip link switches here. -->
+        <section class="index" id="works-index" aria-labelledby="index-title">
+            <h2 class="sr-only" id="index-title">Live projects</h2>
+            <svg class="lines__svg" aria-hidden="true"></svg>
+            <div class="lines" id="index-list"></div>
+        </section>
+    </main>
+
+    <!-- Case view (opened from any tile, card or index row) -->
+    <div class="case" id="case" role="dialog" aria-modal="true" aria-labelledby="case-title" hidden>
+        <div class="case__backdrop" data-action="close"></div>
+        <figure class="case__media">
+            <img class="case__img" alt="" decoding="async">
+        </figure>
+        <div class="case__info">
+            <div class="case__meta">
+                <span class="case__count"><span data-case="n">01</span>/<span data-case="total">05</span></span>
+                <h2 class="case__title" id="case-title"></h2>
+                <span class="case__tags"></span>
             </div>
-            <!-- Centered Top Navigation -->
-            <nav class="top-nav-centered">
-                <a href="https://x.com/Abdulkabirrr" target="_blank" class="nav-link" aria-label="Kabir on Twitter">Twitter</a>
-                <a href="https://contra.com/kabir_anifowose" target="_blank" class="nav-link" aria-label="Kabir on Contra">Contra</a>
-                <a href="mailto:anifowsekb@gmail.com" class="nav-link" aria-label="Email Kabir">Mail</a>
-            </nav>
+            <ul class="case__thumbs" aria-label="Shots from this project"></ul>
+            <div class="case__actions">
+                <a class="chip case__visit" target="_blank" rel="noopener noreferrer">Visit <span aria-hidden="true">↗</span></a>
+                <button type="button" class="chip chip--icon" data-action="prev" aria-label="Previous project">←</button>
+                <button type="button" class="chip chip--icon" data-action="next" aria-label="Next project">→</button>
+            </div>
+        </div>
+        <button type="button" class="chip case__close" data-action="close">Close</button>
+    </div>
 
-            <!-- Centered Main Content Area -->
-            <main class="hero-centered">
-                <div class="hero-sub-tag">DESIGN PARTNER FOR FOUNDERS & AGENCIES</div>
-
-                <h1 class="hero-headline">
-                    From first impression to conversion, every detail matters.
-                </h1>
-
-                <!-- Badge row for projects -->
-                <div class="project-badges">
-                    <a href="https://www.axionclick.com/" target="_blank" class="project-card badge-item"
-                        data-headline="Transforming neural activity into human ability." data-tags="DESIGN | FRAMER DEV"
-                        data-image="https://ik.imagekit.io/kabirrr/work-axion.webp?tr=w-640,f-auto,q-80"
-                        data-logo="AXION" aria-label="View Axion Click project">Axion Click</a>
-
-                    <a href="https://www.enesee.agency/" target="_blank" class="project-card badge-item"
-                        data-headline="Creative agency for the modern world." data-tags="DESIGN | FRAMER DEV"
-                        data-image="https://ik.imagekit.io/kabirrr/work-enesee.webp?tr=w-640,f-auto,q-80"
-                        data-logo="ENESEE" aria-label="View eNESEE AGENCY project">eNESEE AGENCY</a>
-
-                    <!-- <a href="https://chowfast.framer.website/" target="_blank" class="project-card badge-item"
-                        data-headline="Fastest way to order chow in your city."
-                        data-tags="DESIGN | FRAMER DEV"
-                        data-image="https://ik.imagekit.io/kabirrr/work-chowfast.webp?tr=w-640,f-auto,q-80"
-                        data-logo="CHOWFAST" aria-label="View Chowfast project">Web design and FRAMER DEV</a> -->
-
-                    <a href="https://granville.vercel.app/" target="_blank" class="project-card badge-item"
-                        data-headline="Modern inverters for living spaces" data-tags="WEB DESIGN"
-                        data-image="https://ik.imagekit.io/kabirrr/work-granville.webp?tr=w-640,f-auto,q-80"
-                        data-logo="GRANDVILLE" aria-label="View Granville project">Granville</a>
-
-                    <!-- Wilan.webp and Chronicle.webp are both over ImageKit's 25MP limit, so they 404
-                         without an explicit resize in ?tr= — never strip the transform from these two.
-                         Wilan is a near-square section capture, so it's cropped 16:9 from the top to keep
-                         the headline; the alternative hero shot is live at work-wilan.webp (AR 1.6). -->
-                    <a href="https://www.wilaninstitute.com/" target="_blank" class="project-card badge-item"
-                        data-headline="Propelling women forward. Transforming Africa." data-tags="DESIGN"
-                        data-image="https://ik.imagekit.io/kabirrr/Wilan.webp?tr=w-640,h-360,fo-top,f-auto,q-80"
-                        data-logo="WILAN" aria-label="View Wilan Institute project">Wilan Institute</a>
-
-                    <a href="https://chronicle-labs.com/" target="_blank" class="project-card badge-item"
-                        data-headline="Prove your AI agents work before launch." data-tags="DESIGN"
-                        data-image="https://ik.imagekit.io/kabirrr/Chronicle.webp?tr=w-640,f-auto,q-80"
-                        data-logo="CHRONICLE" aria-label="View Chronicle Labs project">Chronicle Labs</a>
-                </div>
-            </main>
-
-            <!-- Centered Bottom Navigation -->
-            <footer class="bottom-bar-centered">
-                <div class="footer-pill footer-pill-left">
-                    <span class="trusted-label">TRUSTED BY</span>
-                    <div class="trusted-links">
-                        <a href="https://www.hex.inc/" target="_blank" class="trusted-link" aria-label="hex inc website">hex inc</a>
-                        <a href="https://wearecheck.co/" target="_blank" class="trusted-link" aria-label="CHECK website">CHECK</a>
-                        <a href="https://chronicle-labs.com/" target="_blank" class="trusted-link" aria-label="CHRONICLE LABS website">CHRONICLE LABS</a>
-                    </div>
-                </div>
-                <a href="https://cal.com/kabirrr/15mins" class="footer-pill footer-pill-right" aria-label="Book a 15 minute Discovery Call">
-                    <span>Book Discovery Call</span>
-                    <i class="ph ph-arrow-right cta-icon" aria-hidden="true"></i>
-                </a>
-            </footer>
+    <!-- Shortcut sheet -->
+    <div class="help" id="help" role="dialog" aria-modal="true" aria-labelledby="help-title" hidden>
+        <div class="help__card">
+            <h2 id="help-title">Shortcuts</h2>
+            <dl>
+                <div><dt>Drag / scroll / arrows</dt><dd>Move around</dd></div>
+                <div><dt><kbd>Ctrl</kbd> + scroll, pinch</dt><dd>Zoom</dd></div>
+                <div><dt><kbd>Z</kbd></dt><dd>Zoom out / back in</dd></div>
+                <div><dt><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></dt><dd>Canvas, pile, index</dd></div>
+                <div><dt><kbd>R</kbd></dt><dd>Reshuffle the pile</dd></div>
+                <div><dt><kbd>M</kbd></dt><dd>Sound on / off</dd></div>
+                <div><dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>Previous / next project</dd></div>
+                <div><dt><kbd>Esc</kbd></dt><dd>Close</dd></div>
+            </dl>
+            <button type="button" class="chip" data-action="help-close">Got it</button>
         </div>
     </div>
 
-    <div class="hover-reveal-placeholder" aria-hidden="true"></div>
-    <img src="https://ik.imagekit.io/kabirrr/hover-reveal.png?tr=w-400,f-auto,q-80"
-        class="hover-reveal-img" alt="" aria-hidden="true">
-
-    <!-- Project Hover Reveal Card structure -->
-    <div class="project-reveal-card" aria-hidden="true">
-        <div class="reveal-media">
-            <!-- Optional img can go here -->
-            <img src="https://ik.imagekit.io/kabirrr/reveal-card.png?tr=w-640,f-auto,q-80"
-                alt="" class="reveal-image">
+    <!-- Bottom bar: content from Figma 2093:5688, sized to match the top chrome -->
+    <footer class="chrome-bottom">
+        <div class="trusted">
+            <span class="trusted__label">Worked with</span>
+            <a href="https://www.hex.inc/" target="_blank" rel="noopener noreferrer" data-scramble>hex inc</a>
+            <a href="https://wearecheck.co/" target="_blank" rel="noopener noreferrer" data-scramble>Check DC</a>
+            <a href="https://oakline.studio/" target="_blank" rel="noopener noreferrer" data-scramble>Oakline Studios</a>
+            <a href="https://www.imaginaryspace.ai/" target="_blank" rel="noopener noreferrer" data-scramble>Imaginaryspace</a>
         </div>
-        <h3 class="reveal-headline">Headline goes here</h3>
-        <div class="reveal-footer">
-            <span class="reveal-tags">TAGS</span>
-            <div class="reveal-logo">LOGO</div>
-        </div>
-    </div>
+        <a class="cta" href="https://cal.com/kabirrr/15mins" target="_blank" rel="noopener noreferrer">
+            <span>Book discovery call</span>
+            <img class="cta__arrow" src="assets/works/arrow-right.svg" width="20" height="20" alt="">
+        </a>
+    </footer>
 
-    <!-- SVG Filter for Liquid Effect -->
-    <svg style="position: absolute; width: 0; height: 0;">
-        <defs>
-            <filter id="liquid">
-                <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
-                <feDisplacementMap id="displacement" in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R"
-                    yChannelSelector="G" />
-            </filter>
-        </defs>
-    </svg>
-
-    <div class="custom-cursor" aria-hidden="true">
-        <div class="cursor-rgb cursor-r"></div>
-        <div class="cursor-rgb cursor-g"></div>
-        <div class="cursor-rgb cursor-b"></div>
-        <div class="cursor-dot"></div>
-    </div>
-    <script src="script.js?v=1.1.0"></script>
+    <div class="cursor" aria-hidden="true"><span class="cursor__label">Drag</span></div>
 </body>
 
 </html>
