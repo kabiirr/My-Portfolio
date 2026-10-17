@@ -173,7 +173,12 @@ kbd {
     pointer-events: auto;
 }
 
+.views {
+    grid-column: 2;
+}
+
 .chrome-top__right {
+    grid-column: 3;
     justify-self: end;
     display: flex;
     align-items: center;
@@ -216,10 +221,6 @@ kbd {
     border-radius: var(--radius);
     backdrop-filter: blur(var(--blur));
     -webkit-backdrop-filter: blur(var(--blur));
-}
-
-.chip--back {
-    justify-self: start;
 }
 
 .coords {
@@ -954,10 +955,6 @@ body[data-view="index"] .stage__hint {
 
     .case__info {
         grid-template-columns: 1fr auto;
-    }
-
-    .chip--back {
-        padding: 0 12px;
     }
 
 }
