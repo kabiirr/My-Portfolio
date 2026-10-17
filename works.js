@@ -26,6 +26,20 @@
        ---------------------------------------------------------------------- */
     const PROJECTS = [
         {
+            key: 'mederva',
+            name: 'Mederva',
+            blurb: 'Longevity care, covered by insurance. Continuous care powered by intelligent clarity.',
+            tags: ['Web design', 'Social'],
+            url: null,
+        },
+        {
+            key: 'pintours',
+            name: 'Pintours',
+            blurb: 'Operational AI for real-world experience design, across travel, mobility, events and entertainment.',
+            tags: ['Web design', 'AI'],
+            url: null,
+        },
+        {
             key: 'primer',
             name: 'Primer Field',
             blurb: 'World models for real decisions: a substrate for generating and inspecting future states.',
@@ -121,6 +135,17 @@
     /* iw / ih: the export's pixel size, used for layout before images load.
        long: a page taller than its tile, which scrolls on hover. */
     const SHOTS = [
+        { id: 'mederva-hero', project: 'mederva', iw: 1600, ih: 900, alt: 'Mederva homepage: Longevity care, covered by insurance' },
+        { id: 'mederva-cream', project: 'mederva', iw: 1600, ih: 900, alt: 'Mederva homepage in cream with pastel stripes' },
+        { id: 'mederva-conditions', project: 'mederva', iw: 1600, ih: 900, alt: 'Mederva section: Conditions we support' },
+        { id: 'mederva-focus', project: 'mederva', iw: 1293, ih: 1616, alt: 'Mederva post: Health, in focus' },
+        { id: 'mederva-score', project: 'mederva', iw: 1293, ih: 1616, alt: 'Mederva post: Your healthspan score' },
+        { id: 'mederva-water', project: 'mederva', iw: 1293, ih: 1616, alt: 'Mederva post: weekly water intake card over a portrait' },
+        { id: 'mederva-arch', project: 'mederva', iw: 1293, ih: 1616, alt: 'Mederva post: Focus changes everything' },
+        { id: 'mederva-pills', project: 'mederva', iw: 1293, ih: 1616, alt: 'Mederva post: a ticker of taglines on teal' },
+        { id: 'mederva-stats', project: 'mederva', iw: 1293, ih: 1616, alt: 'Mederva post: outcome stats on an orange gradient' },
+        { id: 'pintours-hero', project: 'pintours', iw: 1600, ih: 969, alt: 'Pintours homepage: Operational AI for real-world experience design' },
+        { id: 'pintours-engine', project: 'pintours', iw: 1600, ih: 1483, alt: 'Pintours section: A fully integrated experience engine' },
         { id: 'primer-trust', project: 'primer', iw: 1600, ih: 900, alt: 'Primer Field: Built for environments where trust is mandatory' },
         { id: 'primer-simulation', project: 'primer', iw: 1600, ih: 880, alt: 'Primer Field homepage: Simulation, not speculation' },
         { id: 'primer-substrate', project: 'primer', iw: 1600, ih: 2000, alt: 'Primer Field post: A substrate for generating and inspecting future states' },
