@@ -1,4 +1,7 @@
 User-agent: *
+Disallow: /brief.html
+Disallow: /questionnaire.html
 Allow: /
 
 Sitemap: https://kabir.works/sitemap.xml
+

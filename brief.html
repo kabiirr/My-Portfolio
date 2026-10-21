@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Branding & Website Questionnaire — Kabir Anifowose</title>
+    
+    <!-- Private intake: strictly unlisted and hidden from search engine crawlers -->
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="brief.css?v=4">
+    <script src="brief.js" defer></script>
+</head>
+
+<body>
+    <div class="ambient-glow" aria-hidden="true"></div>
+
+    <!-- Hidden iframe target for 100% resilient cross-browser Google Form delivery -->
+    <iframe name="google_form_target" id="google_form_target" style="display:none;" aria-hidden="true"></iframe>
+
+    <!-- Sticky Navigation / Section Stepper -->
+    <nav class="stepper-bar" aria-label="Questionnaire Sections">
+        <div class="stepper-tabs" role="tablist">
+            <a href="#section-1" class="tab-btn active" role="tab">
+                <span class="tab-num">01</span> Vision & Audience
+            </a>
+            <a href="#section-2" class="tab-btn" role="tab">
+                <span class="tab-num">02</span> Brand Identity
+            </a>
+            <a href="#section-3" class="tab-btn" role="tab">
+                <span class="tab-num">03</span> Website Expectations
+            </a>
+        </div>
+
+        <div class="progress-container" aria-label="Form completion progress">
+            <span class="progress-text" id="progressText">0% completed</span>
+            <div class="progress-track" aria-hidden="true">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Hero Introduction -->
+        <header class="hero">
+            <div class="hero__meta">Discovery Brief // Project Kickoff</div>
+            <h1 class="hero__title">Branding & Website Questionnaire</h1>
+            <p class="hero__desc">
+                A collaborative discovery document to define your brand identity, business vision, and website direction before we begin design and development.
+            </p>
+            <div class="meta-chips">
+                <span class="meta-chip">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="8" cy="8" r="6"/>
+                        <path d="M8 5v3.5l2 1.5"/>
+                    </svg>
+                    ~10–15 mins
+                </span>
+                <span class="meta-chip">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M3 13V3h10v10z"/>
+                        <path d="M6 3v4h4V3"/>
+                    </svg>
+                    Auto-saved in your browser
+                </span>
+                <span class="meta-chip">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M2 4h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4z"/>
+                        <path d="M5 8h6M5 11h4"/>
+                    </svg>
+                    Directly recorded to Google Sheets
+                </span>
+            </div>
+        </header>
+
+        <!-- Respondent Details (Client info) -->
+        <section class="client-section" aria-labelledby="client-info-title">
+            <h2 class="section-tag" id="client-info-title">Organization &amp; Contact</h2>
+            <div class="client-info-grid">
+                <div class="client-field">
+                    <label for="clientCompany">Company / Brand Name</label>
+                    <input type="text" id="clientCompany" placeholder="e.g. Acme Studio" autocomplete="organization">
+                </div>
+                <div class="client-field">
+                    <label for="clientName">Your Name &amp; Role</label>
+                    <input type="text" id="clientName" placeholder="e.g. Alex Rivera, Founder" autocomplete="name">
+                </div>
+                <div class="client-field">
+                    <label for="clientEmail">Email Address</label>
+                    <input type="email" id="clientEmail" placeholder="e.g. alex@acme.com" autocomplete="email">
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Form wired directly to Google Form endpoint -->
+        <form id="briefForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfBrekUFpNGe7Cw2ZHj7Z4jdayahr91du-8R0Lay2Hd9nUjYg/formResponse" method="POST" target="google_form_target">
+            <!-- Google Form Hidden Control Fields -->
+            <input type="hidden" name="fvv" value="1">
+            <input type="hidden" name="pageHistory" value="0">
+            <input type="hidden" name="fbzx" value="1764141824784305232">
+            <input type="hidden" name="submissionTimestamp" value="-1">
+
+            <!-- ==========================================================================
+                 SECTION 01: Vision, Business and Audience
+                 ========================================================================== -->
+            <section class="form-section" id="section-1" aria-labelledby="sec1-title">
+                <header class="section-header">
+                    <div class="section-header__tag">Section 01</div>
+                    <h2 class="section-header__title" id="sec1-title">Vision, Business & Audience</h2>
+                </header>
+
+                <div class="field-stack">
+                    <!-- Q1 -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">01</span>
+                            <label for="entry_1767677212" class="field-label">
+                                How would you describe your business in a short paragraph?
+                            </label>
+                        </div>
+                        <textarea id="entry_1767677212" name="entry.1767677212" rows="3" placeholder="Tell us what you do, who it’s for, and the core value you provide..."></textarea>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">02</span>
+                            <label for="entry_1324093799" class="field-label">
+                                What is prompting this brand refresh right now?
+                            </label>
+                        </div>
+                        <textarea id="entry_1324093799" name="entry.1324093799" rows="3" placeholder="What triggered this project? (e.g. scaling up, pivoting, new funding, outgrowing your current look)"></textarea>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">03</span>
+                            <label for="entry_750641452" class="field-label">
+                                Who are some of your main competitors in the market?
+                                <span class="field-hint">Please share links where possible</span>
+                            </label>
+                        </div>
+                        <textarea id="entry_750641452" name="entry.750641452" rows="3" placeholder="https://competitor-a.com&#10;https://competitor-b.com"></textarea>
+                    </div>
+
+                    <!-- Q4 -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">04</span>
+                            <label for="entry_1115340676" class="field-label">
+                                Why would a customer choose you over your competitors? (Your USP)
+                            </label>
+                        </div>
+                        <textarea id="entry_1115340676" name="entry.1115340676" rows="3" placeholder="What is your distinctive advantage, differentiator, or edge?"></textarea>
+                    </div>
+
+                    <!-- Q5 -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">05</span>
+                            <label for="entry_2123139921" class="field-label">
+                                Who is the primary audience you expect on the website?
+                                <span class="field-hint">Please include demographics and key visitor profiles</span>
+                            </label>
+                        </div>
+                        <textarea id="entry_2123139921" name="entry.2123139921" rows="3" placeholder="Decision-makers, founders, engineering leads, enterprise clients, consumers..."></textarea>
+                    </div>
+
+                    <!-- Q6 -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">06</span>
+                            <label for="entry_1474355971" class="field-label">
+                                Who is the secondary audience for the website?
+                            </label>
+                        </div>
+                        <textarea id="entry_1474355971" name="entry.1474355971" rows="2" placeholder="Investors, prospective hires, media, partners..."></textarea>
+                    </div>
+
+                    <!-- Q7 -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">07</span>
+                            <label for="entry_1197353793" class="field-label">
+                                Can you share materials that explain your products and the industries they serve?
+                            </label>
+                        </div>
+                        <textarea id="entry_1197353793" name="entry.1197353793" rows="3" placeholder="Links to pitch decks, Google Drive, Notion, Figma, or product overviews..."></textarea>
+                    </div>
+
+                    <!-- Q8 -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">08</span>
+                            <label for="entry_262936819" class="field-label">
+                                What does success look like in 3 to 6 months?
+                            </label>
+                        </div>
+                        <textarea id="entry_262936819" name="entry.262936819" rows="3" placeholder="Key milestones, inbound leads, brand perception, conversion targets, funding goals..."></textarea>
+                    </div>
+
+                    <!-- Q9 -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">09</span>
+                            <label for="entry_2060352188" class="field-label">
+                                If this project goes exceptionally well, what changes for your business?
+                            </label>
+                        </div>
+                        <textarea id="entry_2060352188" name="entry.2060352188" rows="3" placeholder="What is the transformative outcome for your team and company?"></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================================================
+                 SECTION 02: Brand Identity
+                 ========================================================================== -->
+            <section class="form-section" id="section-2" aria-labelledby="sec2-title">
+                <header class="section-header">
+                    <div class="section-header__tag">Section 02</div>
+                    <h2 class="section-header__title" id="sec2-title">Brand Identity</h2>
+                </header>
+
+                <div class="field-stack">
+                    <!-- Q10 -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">10</span>
+                            <label for="entry_727716526" class="field-label">
+                                Which brands do you admire, and why?
+                            </label>
+                        </div>
+                        <textarea id="entry_727716526" name="entry.727716526" rows="3" placeholder="Brands within or outside your industry and what specifically resonates with you..."></textarea>
+                    </div>
+
+                    <!-- Q11 -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">11</span>
+                            <label for="entry_1725726829" class="field-label">
+                                Are there any brands you dislike, and why?
+                            </label>
+                        </div>
+                        <textarea id="entry_1725726829" name="entry.1725726829" rows="3" placeholder="Aesthetics, industry trends, or clichés you want to avoid completely..."></textarea>
+                    </div>
+
+                    <!-- Q12 -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">12</span>
+                            <label for="entry_401272118" class="field-label">
+                                Do you have existing brand guidelines or specific fonts you’d like to use?
+                            </label>
+                        </div>
+                        <textarea id="entry_401272118" name="entry.401272118" rows="2" placeholder="List font preferences or link to your brand book, Figma file, or style guide..."></textarea>
+                    </div>
+
+                    <!-- Q13 -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">13</span>
+                            <label for="entry_492140963" class="field-label">
+                                Can you share the vector or source files for your logo?
+                            </label>
+                        </div>
+                        <textarea id="entry_492140963" name="entry.492140963" rows="2" placeholder="Paste link to SVG, AI, EPS, or Figma vector file..."></textarea>
+                    </div>
+
+                    <!-- Q14: Radio (Colours) -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">14</span>
+                            <span class="field-label">
+                                Are you open to exploring colours beyond your existing brand palette?
+                            </span>
+                        </div>
+                        <div class="choice-group" role="radiogroup" aria-label="Open to new colours">
+                            <label class="choice-label">
+                                <input type="radio" name="entry.346623638" value="Yes">
+                                <span class="choice-pill">Yes</span>
+                            </label>
+                            <label class="choice-label">
+                                <input type="radio" name="entry.346623638" value="No">
+                                <span class="choice-pill">No</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Q15: Radio (Fonts) -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">15</span>
+                            <span class="field-label">
+                                Are you open to exploring new typography beyond your current fonts?
+                            </span>
+                        </div>
+                        <div class="choice-group" role="radiogroup" aria-label="Open to new fonts">
+                            <label class="choice-label">
+                                <input type="radio" name="entry.782381188" value="Yes">
+                                <span class="choice-pill">Yes</span>
+                            </label>
+                            <label class="choice-label">
+                                <input type="radio" name="entry.782381188" value="No">
+                                <span class="choice-pill">No</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Q16 -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">16</span>
+                            <label for="entry_1959529423" class="field-label">
+                                If yes, are you open to commercial fonts, and is there a budget cap for licensing?
+                            </label>
+                        </div>
+                        <textarea id="entry_1959529423" name="entry.1959529423" rows="2" placeholder="e.g. Comfortable with licensing up to $X / Prefer open-source / Budget is flexible..."></textarea>
+                    </div>
+
+                    <!-- Q17 -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">17</span>
+                            <label for="entry_1584121549" class="field-label">
+                                Do you have an image library or illustration bank we can use?
+                            </label>
+                        </div>
+                        <textarea id="entry_1584121549" name="entry.1584121549" rows="2" placeholder="Link to photo assets, 3D renders, or illustration libraries (or note if these need to be created from scratch)..."></textarea>
+                    </div>
+
+                    <!-- Q18 -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">18</span>
+                            <label for="entry_1900660657" class="field-label">
+                                When you visualize your organization, what forms, shapes, and colours come to mind first?
+                            </label>
+                        </div>
+                        <textarea id="entry_1900660657" name="entry.1900660657" rows="3" placeholder="Immediate moods, geometry, or visual impressions (e.g. sharp lines, organic curves, deep obsidian, electric blue)..."></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================================================
+                 SECTION 03: Website Expectations
+                 ========================================================================== -->
+            <section class="form-section" id="section-3" aria-labelledby="sec3-title">
+                <header class="section-header">
+                    <div class="section-header__tag">Section 03</div>
+                    <h2 class="section-header__title" id="sec3-title">Website Expectations</h2>
+                </header>
+
+                <div class="field-stack">
+                    <!-- Q19 -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">19</span>
+                            <label for="entry_876045034" class="field-label">
+                                What is the primary objective of redesigning your website?
+                            </label>
+                        </div>
+                        <textarea id="entry_876045034" name="entry.876045034" rows="3" placeholder="e.g. Higher conversion, brand credibility, clearer product storytelling, enterprise repositioning..."></textarea>
+                    </div>
+
+                    <!-- Q20 -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">20</span>
+                            <label for="entry_1671024253" class="field-label">
+                                What is the link to your current website?
+                            </label>
+                        </div>
+                        <input type="url" id="entry_1671024253" name="entry.1671024253" placeholder="https://yourcompany.com">
+                    </div>
+
+                    <!-- Q21 -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">21</span>
+                            <label for="entry_1894988941" class="field-label">
+                                What challenges or limitations are you experiencing with your current site?
+                            </label>
+                        </div>
+                        <textarea id="entry_1894988941" name="entry.1894988941" rows="3" placeholder="Difficult to update, outdated look, slow load times, poor mobile experience, low conversions..."></textarea>
+                    </div>
+
+                    <!-- Q22 -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">22</span>
+                            <label for="entry_928459936" class="field-label">
+                                Are there specific pain points you want resolved for your visitors?
+                            </label>
+                        </div>
+                        <textarea id="entry_928459936" name="entry.928459936" rows="3" placeholder="Unclear product value, confusing navigation, friction when booking or signing up..."></textarea>
+                    </div>
+
+                    <!-- Q23 Grouped: Benchmarks -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">23</span>
+                            <span class="field-label">
+                                Which benchmark websites do you look to for inspiration?
+                                <span class="field-hint">Please share reference links in two categories below</span>
+                            </span>
+                        </div>
+                        <textarea id="entry_128768359" name="entry.128768359" rows="2" placeholder="General benchmarks or initial links..."></textarea>
+                        
+                        <div class="nested-group">
+                            <div class="nested-item">
+                                <label for="entry_286579868">— Direct industry benchmarks</label>
+                                <input type="text" id="entry_286579868" name="entry.286579868" placeholder="https://competitor-or-peer.com">
+                            </div>
+                            <div class="nested-item">
+                                <label for="entry_2121610848">— Outside your industry (industry-agnostic)</label>
+                                <input type="text" id="entry_2121610848" name="entry.2121610848" placeholder="https://any-inspirational-site.com">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q24 -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">24</span>
+                            <label for="entry_791151662" class="field-label">
+                                What specifically do you admire about these benchmark websites?
+                                <span class="field-hint">Consider layout structure, interactions, pacing, or tone for your new site</span>
+                            </label>
+                        </div>
+                        <textarea id="entry_791151662" name="entry.791151662" rows="3" placeholder="Clean hierarchy, thoughtful micro-interactions, compelling copy, interactive demos..."></textarea>
+                    </div>
+
+                    <!-- Q25 -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">25</span>
+                            <label for="entry_2051828829" class="field-label">
+                                Are there absolute do’s and don’ts we should keep in mind?
+                                <span class="field-hint">Please list any non-negotiables, must-haves, or pet peeves</span>
+                            </label>
+                        </div>
+                        <textarea id="entry_2051828829" name="entry.2051828829" rows="3" placeholder="DO: Clean typography, snappy micro-interactions, prominent CTA&#10;DON'T: Cheesy stock photos, walls of unbroken text, cluttered navigation"></textarea>
+                    </div>
+
+                    <!-- Q26 -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">26</span>
+                            <label for="entry_820291806" class="field-label">
+                                Do you have a preference for an imagery-driven or illustration-driven aesthetic?
+                            </label>
+                        </div>
+                        <textarea id="entry_820291806" name="entry.820291806" rows="2" placeholder="e.g. Authentic photography, high-fidelity 3D renders, custom illustrations, or a balanced hybrid..."></textarea>
+                    </div>
+
+                    <!-- Q27 -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">27</span>
+                            <label for="entry_1952351256" class="field-label">
+                                What feeling or impression should visitors take away after visiting your website?
+                            </label>
+                        </div>
+                        <textarea id="entry_1952351256" name="entry.1952351256" rows="2" placeholder="e.g. Confident, inspired, reassured, intrigued, energized..."></textarea>
+                    </div>
+
+                    <!-- Q28 -->
+                    <div class="field">
+                        <div class="field-header">
+                            <span class="field-num">28</span>
+                            <label for="entry_1754048780" class="field-label">
+                                How would you describe your ideal site visitor?
+                                <span class="field-hint">Keywords or traits that describe their mindset, needs, and perspective</span>
+                            </label>
+                        </div>
+                        <textarea id="entry_1754048780" name="entry.1754048780" rows="3" placeholder="e.g. Pragmatic, tech-forward, discerning, analytical, design-conscious..."></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bottom Floating Dock for Submission -->
+            <aside class="submit-dock" aria-label="Submission actions">
+                <div class="dock-left">
+                    <span class="dock-status" id="dockProgressText">0 of 28 answered</span>
+                    <span class="dock-divider" aria-hidden="true">·</span>
+                    <div class="autosave-pill" aria-live="polite">
+                        <span class="autosave-dot" id="autosaveDot"></span>
+                        <span id="autosaveText">Saved locally</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <span class="spinner" aria-hidden="true"></span>
+                    <span class="btn-label">Submit Questionnaire</span>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M3 8h10M9 4l4 4-4 4"/>
+                    </svg>
+                </button>
+            </aside>
+        </form>
+    </main>
+
+    <!-- Success Confirmation Modal -->
+    <div class="modal-overlay" id="successModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="success-card">
+            <div class="success-icon-wrap" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                </svg>
+            </div>
+            
+            <h2 class="success-title" id="modalTitle">Brief Received!</h2>
+            <p class="success-body">
+                Thank you for taking the time to share your vision. Your responses have been submitted and recorded directly to Kabir's project sheet. We'll review your answers thoroughly before our discovery session.
+            </p>
+
+            <div class="success-actions">
+                <button type="button" class="btn-secondary" id="downloadTxtBtn">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M8 2v9M4 7l4 4 4-4M2 13h12"/>
+                    </svg>
+                    Download Your Copy (.txt)
+                </button>
+                <button type="button" class="btn-secondary" id="downloadJsonBtn">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M11 2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/>
+                        <path d="M6 7l2 2 2-2"/>
+                    </svg>
+                    Download Structured JSON
+                </button>
+                <button type="button" class="btn-ghost-subtle" id="editResponseBtn" style="color: var(--text-secondary); padding: 8px;">
+                    Make an edit or view responses
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
