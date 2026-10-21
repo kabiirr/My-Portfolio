@@ -16,8 +16,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="brief.css?v=5">
-    <script src="brief.js?v=6" defer></script>
+    <link rel="stylesheet" href="brief.css?v=6">
+    <script src="brief.js?v=7" defer></script>
 </head>
 
 <body>
@@ -96,13 +96,13 @@
                 </div>
                 <div class="client-field">
                     <label for="clientEmail">Email Address</label>
-                    <input type="email" id="clientEmail" placeholder="e.g. alex@acme.com" autocomplete="email">
+                    <input type="text" id="clientEmail" placeholder="e.g. alex@acme.com" autocomplete="email" inputmode="email">
                 </div>
             </div>
         </section>
 
         <!-- Main Form wired directly to Google Form endpoint -->
-        <form id="briefForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfBrekUFpNGe7Cw2ZHj7Z4jdayahr91du-8R0Lay2Hd9nUjYg/formResponse" method="POST" target="google_form_target">
+        <form id="briefForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfBrekUFpNGe7Cw2ZHj7Z4jdayahr91du-8R0Lay2Hd9nUjYg/formResponse" method="POST" target="google_form_target" novalidate>
             <!-- Google Form Multi-Page Control Fields -->
             <input type="hidden" name="fvv" value="1">
             <input type="hidden" name="pageHistory" value="0,1,2">
@@ -378,7 +378,7 @@
                                 What is the link to your current website?
                             </label>
                         </div>
-                        <input type="url" id="entry_1671024253" name="entry.1671024253" placeholder="https://yourcompany.com">
+                        <input type="text" id="entry_1671024253" name="entry.1671024253" placeholder="https://yourcompany.com or yourcompany.com" inputmode="url">
                     </div>
 
                     <!-- Q21 -->
