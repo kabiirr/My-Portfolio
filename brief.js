@@ -81,7 +81,11 @@
                     data[el.name] = el.value;
                 }
             } else if (el.type !== 'hidden') {
-                data[el.name] = el.value;
+                let val = el.value;
+                if (el.name === 'entry.1767677212' && typeof val === 'string') {
+                    val = val.replace(/^\[Client:[\s\S]*?\]\n\n/, '');
+                }
+                data[el.name] = val;
             }
         });
 
@@ -136,7 +140,11 @@
                 } else {
                     const input = form.querySelector(`[name="${name}"]`);
                     if (input) {
-                        input.value = val;
+                        let finalVal = val;
+                        if (name === 'entry.1767677212' && typeof finalVal === 'string') {
+                            finalVal = finalVal.replace(/^\[Client:[\s\S]*?\]\n\n/, '');
+                        }
+                        input.value = finalVal;
                         // Trigger resize for textarea
                         if (input.tagName === 'TEXTAREA') {
                             autoResizeTextarea(input);
@@ -206,12 +214,17 @@
         const firstField = form.querySelector('[name="entry.1767677212"]');
         const originalText = firstField ? firstField.value : '';
 
-        // Prepend client identifier so Kabir immediately sees who submitted in Google Sheet
-        const metaPrefix = `[Client: ${company || 'N/A'} | Contact: ${clientName || 'N/A'} <${clientEmail || 'N/A'}>]\n\n`;
-        if (firstField) {
-            const cleanText = originalText.replace(/^\[Client:[\s\S]*?\]\n\n/, '');
-            firstField.value = metaPrefix + (cleanText || '(No business description provided)');
+        // Clean user's actual text (strip any prefix if it was previously there)
+        const cleanUserText = originalText.replace(/^\[Client:[\s\S]*?\]\n\n/, '').trim();
+
+        // Ensure visible input box ONLY shows clean text - NEVER the internal metadata prefix
+        if (firstField && firstField.value !== cleanUserText) {
+            firstField.value = cleanUserText;
         }
+
+        // Meta prefix is sent to Google Form / Sheets payload ONLY, NEVER in the visible input box
+        const metaPrefix = `[Client: ${company || 'N/A'} | Contact: ${clientName || 'N/A'} <${clientEmail || 'N/A'}>]\n\n`;
+        const payloadText = metaPrefix + (cleanUserText || '(No business description provided)');
 
         // Prepare URLSearchParams for Google Forms (Google Forms requires application/x-www-form-urlencoded)
         const formData = new FormData(form);
@@ -219,6 +232,8 @@
         for (const [key, val] of formData.entries()) {
             urlParams.append(key, val);
         }
+        // Set Google Form payload for Question 1
+        urlParams.set('entry.1767677212', payloadText);
         urlParams.set('pageHistory', '0,1,2');
         urlParams.set('fvv', '1');
 
@@ -235,7 +250,11 @@
             const label = field.querySelector('.field-label')?.childNodes[0]?.textContent?.trim() || '';
             const input = field.querySelector('textarea, input[type="text"], input[type="email"], input[type="url"], input[type="radio"]:checked');
             if (label && input) {
-                submissionSnapshot.responses[label] = input.value;
+                let val = input.value;
+                if (input.name === 'entry.1767677212') {
+                    val = cleanUserText;
+                }
+                submissionSnapshot.responses[label] = val;
             }
         });
 
@@ -264,12 +283,29 @@
             }
         }
 
-        // Show success state after smooth transition
+        // Clean draft storage after successful submission
+        localStorage.removeItem(STORAGE_KEY);
+
+        // Show success state after smooth transition and clear input boxes
         setTimeout(() => {
             isSubmitting = false;
             submitBtn.disabled = false;
             submitBtn.classList.remove('submitting');
             showSuccessModal();
+
+            // Clear input boxes after submission
+            form.reset();
+            const compEl = document.getElementById('clientCompany');
+            const nameEl = document.getElementById('clientName');
+            const emailEl = document.getElementById('clientEmail');
+            if (compEl) compEl.value = '';
+            if (nameEl) nameEl.value = '';
+            if (emailEl) emailEl.value = '';
+            form.querySelectorAll('textarea').forEach(t => {
+                t.style.height = '';
+            });
+            updateProgress();
+            if (autosaveText) autosaveText.textContent = 'Submitted';
         }, 600);
     }
 
@@ -334,6 +370,13 @@
     function init() {
         // Restore existing draft
         restoreDraft();
+
+        // Immediately clean up any legacy prefix from input box if present
+        const q1 = form.querySelector('[name="entry.1767677212"]');
+        if (q1 && q1.value.includes('[Client:')) {
+            q1.value = q1.value.replace(/^\[Client:[\s\S]*?\]\n\n/, '');
+            autoResizeTextarea(q1);
+        }
 
         // Listen for all input/change events
         form.addEventListener('input', (e) => {
