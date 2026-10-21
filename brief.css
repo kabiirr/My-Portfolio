@@ -665,6 +665,34 @@ textarea {
     gap: 12px;
 }
 
+.btn-close-modal {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 13px 24px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 600;
+    color: #000000;
+    background: #ffffff;
+    border: none;
+    cursor: pointer;
+    transition: transform 180ms var(--ease-out), background-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out);
+    box-shadow: 0 4px 14px rgba(255, 255, 255, 0.15);
+}
+
+.btn-close-modal:hover {
+    background: #e5e5e5;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25);
+}
+
+.btn-close-modal:active {
+    transform: translateY(1px);
+}
+
 .btn-secondary {
     display: inline-flex;
     align-items: center;

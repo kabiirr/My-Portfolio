@@ -19,9 +19,7 @@
     const progressText = document.getElementById('progressText');
     const dockProgressText = document.getElementById('dockProgressText');
     const successModal = document.getElementById('successModal');
-    const downloadJsonBtn = document.getElementById('downloadJsonBtn');
-    const downloadTxtBtn = document.getElementById('downloadTxtBtn');
-    const editResponseBtn = document.getElementById('editResponseBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
     const tabs = document.querySelectorAll('.tab-btn');
     const sections = document.querySelectorAll('.form-section');
 
@@ -210,12 +208,19 @@
 
         // Prepend client identifier so Kabir immediately sees who submitted in Google Sheet
         const metaPrefix = `[Client: ${company || 'N/A'} | Contact: ${clientName || 'N/A'} <${clientEmail || 'N/A'}>]\n\n`;
-        if (firstField && !originalText.startsWith('[Client:')) {
-            firstField.value = metaPrefix + originalText;
+        if (firstField) {
+            const cleanText = originalText.replace(/^\[Client:[\s\S]*?\]\n\n/, '');
+            firstField.value = metaPrefix + (cleanText || '(No business description provided)');
         }
 
-        // Prepare FormData
+        // Prepare URLSearchParams for Google Forms (Google Forms requires application/x-www-form-urlencoded)
         const formData = new FormData(form);
+        const urlParams = new URLSearchParams();
+        for (const [key, val] of formData.entries()) {
+            urlParams.append(key, val);
+        }
+        urlParams.set('pageHistory', '0,1,2');
+        urlParams.set('fvv', '1');
 
         // Save snapshot for client export/download
         const submissionSnapshot = {
@@ -236,7 +241,7 @@
 
         localStorage.setItem(SUBMITTED_KEY, JSON.stringify(submissionSnapshot));
 
-        // Submit via fetch (mode: 'no-cors')
+        // Submit via fetch (mode: 'no-cors' with application/x-www-form-urlencoded)
         const actionUrl = form.getAttribute('action');
 
         let fetchSuccess = false;
@@ -244,18 +249,19 @@
             await fetch(actionUrl, {
                 method: 'POST',
                 mode: 'no-cors',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: urlParams
             });
             fetchSuccess = true;
         } catch (err) {
             console.warn('Fetch submission notice (submitting fallback via iframe):', err);
-        }
-
-        // Also submit form through hidden iframe for 100% cross-browser guarantee
-        try {
-            form.submit();
-        } catch (err) {
-            // ignore
+            try {
+                form.submit();
+            } catch (iframeErr) {
+                console.error('Fallback iframe submit failed:', iframeErr);
+            }
         }
 
         // Show success state after smooth transition
@@ -356,16 +362,20 @@
             });
         }
 
-        // Export buttons
-        if (downloadJsonBtn) {
-            downloadJsonBtn.addEventListener('click', () => downloadResponses('json'));
+        // Modal Close listeners
+        if (closeModalBtn) {
+            closeModalBtn.addEventListener('click', hideSuccessModal);
         }
-        if (downloadTxtBtn) {
-            downloadTxtBtn.addEventListener('click', () => downloadResponses('txt'));
+        if (successModal) {
+            successModal.addEventListener('click', (e) => {
+                if (e.target === successModal) hideSuccessModal();
+            });
         }
-        if (editResponseBtn) {
-            editResponseBtn.addEventListener('click', hideSuccessModal);
-        }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && successModal?.classList.contains('active')) {
+                hideSuccessModal();
+            }
+        });
 
         // Setup scroll spy
         setupScrollSpy();

@@ -9,3 +9,4 @@ assets/media/bg-scenery-720p.mp4
 # Full-size Figma exports for the works page. The page uses the optimised
 # copies in assets/works/shots/, so these ~75MB originals stay local.
 assets/works/*.png
+.vercel

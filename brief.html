@@ -16,8 +16,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="brief.css?v=4">
-    <script src="brief.js" defer></script>
+    <link rel="stylesheet" href="brief.css?v=5">
+    <script src="brief.js?v=6" defer></script>
 </head>
 
 <body>
@@ -103,11 +103,9 @@
 
         <!-- Main Form wired directly to Google Form endpoint -->
         <form id="briefForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfBrekUFpNGe7Cw2ZHj7Z4jdayahr91du-8R0Lay2Hd9nUjYg/formResponse" method="POST" target="google_form_target">
-            <!-- Google Form Hidden Control Fields -->
+            <!-- Google Form Multi-Page Control Fields -->
             <input type="hidden" name="fvv" value="1">
-            <input type="hidden" name="pageHistory" value="0">
-            <input type="hidden" name="fbzx" value="1764141824784305232">
-            <input type="hidden" name="submissionTimestamp" value="-1">
+            <input type="hidden" name="pageHistory" value="0,1,2">
 
             <!-- ==========================================================================
                  SECTION 01: Vision, Business and Audience
@@ -521,25 +519,12 @@
             
             <h2 class="success-title" id="modalTitle">Brief Received!</h2>
             <p class="success-body">
-                Thank you for taking the time to share your vision. Your responses have been submitted and recorded directly to Kabir's project sheet. We'll review your answers thoroughly before our discovery session.
+                Your response has been submitted, thank you.
             </p>
 
             <div class="success-actions">
-                <button type="button" class="btn-secondary" id="downloadTxtBtn">
-                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M8 2v9M4 7l4 4 4-4M2 13h12"/>
-                    </svg>
-                    Download Your Copy (.txt)
-                </button>
-                <button type="button" class="btn-secondary" id="downloadJsonBtn">
-                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M11 2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/>
-                        <path d="M6 7l2 2 2-2"/>
-                    </svg>
-                    Download Structured JSON
-                </button>
-                <button type="button" class="btn-ghost-subtle" id="editResponseBtn" style="color: var(--text-secondary); padding: 8px;">
-                    Make an edit or view responses
+                <button type="button" class="btn-close-modal" id="closeModalBtn">
+                    Close
                 </button>
             </div>
         </div>
